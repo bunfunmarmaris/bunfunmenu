@@ -174,6 +174,13 @@
             font-size: 11px;
             text-align: center;
             flex-shrink: 0;
+            object-fit: cover;
+            overflow: hidden;
+        }
+        .product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .product-info {
             flex-grow: 1;
@@ -215,6 +222,13 @@
             color: #888;
             font-size: 14px;
             margin-bottom: 20px;
+            object-fit: cover;
+            overflow: hidden;
+        }
+        .detail-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .detail-title {
             font-size: 22px;
@@ -280,7 +294,7 @@
                 <button class="back-btn" onclick="backToProducts()">← <span id="txt-back-prod">Ürünlere Dön</span></button>
             </div>
             <div class="detail-box">
-                <div class="detail-img">[ Ürün Görseli Yakında ]</div>
+                <div id="detail-img-container" class="detail-img">[ Ürün Görseli Yakında ]</div>
                 <h2 id="detail-title" class="detail-title">Ürün Adı</h2>
                 <p id="detail-desc" class="detail-desc">Açıklama</p>
                 <div id="detail-price" class="detail-price">0 TL</div>
@@ -302,11 +316,11 @@
                             { name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
                             { name: "Islak Cheeseburger", desc: "Dana burger köftesi, cheddar, özel sos.", price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg" },
                             { name: "Islak Lüksburger", desc: "Dana burger köftesi, Amerikan Salatası, özel sos.", price: "170 TL", image: "images/islakluksburger.jpg.jpeg" },
-                            { name: "Fun Smash Burger", desc: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", price: "560 TL",image: "images/funsmashburger.jpg.jpeg" },
+                            { name: "Fun Smash Burger", desc: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", price: "560 TL", image: "images/funsmashburger.jpg.jpeg" },
                             { name: "Heat Fun Burger", desc: "2x60 gr. smash dana köfte, cheddar, ızgara soğan, sriracha sos + Patates", price: "550 TL", image: "images/heatfunburger.jpg.jpeg" },
                             { name: "Bun&Fun Burger", desc: "120 gr. dana köfte, dana füme, cheddar, çıtır soğan, turşu, marul, garlic sos + Patates", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
                             { name: "Chicken Fun Burger", desc: "Çıtır tavuk, marul, turşu, ranch sos + Patates", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
-                            { name: "BBQ Chicken Fun Burger", desc: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", price: "480 TL"image: "images/bbqchickenfunburger.jpg.jpeg" },
+                            { name: "BBQ Chicken Fun Burger", desc: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
                             { name: "Double Chirpy Fun Burger", desc: "Çift kat çıtır tavuk, çift cheddar, marul, turşu, özel B&F köri sos + Patates.", price: "480 TL" }
                         ]
                     },
@@ -336,9 +350,9 @@
                     {
                         name: "TOSTLAR",
                         products: [
-                            { name: "Kaşarlı Tost", desc: "Kaşar peyniri.", price: "200 TL",image: "images/kasarlitost.jpg.jpeg" },
+                            { name: "Kaşarlı Tost", desc: "Kaşar peyniri.", price: "200 TL", image: "images/kasarlitost.jpg.jpeg" },
                             { name: "Karışık Tost", desc: "Kaşar peyniri, kasap sucuk.", price: "250 TL", image: "images/karisiktost.jpg.jpeg" },
-                            { name: "Yengen Tost", desc: "Kaşar peyniri, kasap sucuk, domates, turşu, ketçap, mayonez.", price: "280 TL" image: "images/yengentost.jpg.jpeg" },
+                            { name: "Yengen Tost", desc: "Kaşar peyniri, kasap sucuk, domates, turşu, ketçap, mayonez.", price: "280 TL", image: "images/yengentost.jpg.jpeg" },
                             { name: "Süper Ayvalık Tostu", desc: "Kaşar peyniri, kasap sucuk, sosis, Amerikan Salatası, turşu, ketçap, mayonez.", price: "320 TL", image: "images/ayvaliktostu.jpg.jpeg" },
                             { name: "Cheddar Bomb Tost", desc: "Cheddar peyniri, kasap sucuk, sosis, turşu.", price: "320 TL" }
                         ]
@@ -646,8 +660,14 @@
             cat.products.forEach((prod) => {
                 const pCard = document.createElement('div');
                 pCard.className = 'product-card';
+                
+                // Görsel kontrolü (varsa göster, yoksa "Görsel Yok" yaz)
+                let thumbContent = prod.image 
+                    ? `<img src="${prod.image}" alt="${prod.name}">` 
+                    : `Görsel Yok`;
+
                 pCard.innerHTML = `
-                    <div class="product-thumb">Görsel Yok</div>
+                    <div class="product-thumb">${thumbContent}</div>
                     <div class="product-info">
                         <div class="product-name">${prod.name}</div>
                         <div class="product-desc-preview">${prod.desc}</div>
@@ -669,6 +689,14 @@
             document.getElementById('detail-title').innerText = prod.name;
             document.getElementById('detail-desc').innerText = prod.desc;
             document.getElementById('detail-price').innerText = prod.price;
+
+            // Detay sayfasındaki görsel yönetimi
+            const imgContainer = document.getElementById('detail-img-container');
+            if (prod.image) {
+                imgContainer.innerHTML = `<img src="${prod.image}" alt="${prod.name}">`;
+            } else {
+                imgContainer.innerHTML = `[ Ürün Görseli Yakında ]`;
+            }
 
             goToPage('page-detail');
         }
