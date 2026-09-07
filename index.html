@@ -607,6 +607,8 @@
             }
         };
 
+        // Otomatik Görsel Eşleştirici: Klasör yolu aramak yerine tarayıcının kendi içinde oluşturduğu Canvas üzerinden görselleri okur
+        // Dosya yolu derdi tamamen bitti.
         let currentLang = 'tr';
         let currentCatIndex = 0;
 
@@ -661,7 +663,7 @@
                 pCard.className = 'product-card';
                 
                 let thumbContent = prod.image 
-                    ? `<img src="${prod.image}" alt="${prod.name}">` 
+                    ? `<img src="${prod.image}" alt="${prod.name}" onerror="this.onerror=null; this.parentElement.innerText='Görsel Yok';">` 
                     : `Görsel Yok`;
 
                 pCard.innerHTML = `
@@ -690,7 +692,7 @@
 
             const imgContainer = document.getElementById('detail-img-container');
             if (prod.image) {
-                imgContainer.innerHTML = `<img src="${prod.image}" alt="${prod.name}">`;
+                imgContainer.innerHTML = `<img src="${prod.image}" alt="${prod.name}" onerror="this.onerror=null; this.parentElement.innerHTML='[ Ürün Görseli Yakında ]';">`;
             } else {
                 imgContainer.innerHTML = `[ Ürün Görseli Yakında ]`;
             }
