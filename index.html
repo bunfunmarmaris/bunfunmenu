@@ -322,7 +322,7 @@
                             { name: "Bun&Fun Burger", desc: "120 gr. dana köfte, dana füme, cheddar, çıtır soğan, turşu, marul, garlic sos + Patates", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
                             { name: "Chicken Fun Burger", desc: "Çıtır tavuk, marul, turşu, ranch sos + Patates", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
                             { name: "BBQ Chicken Fun Burger", desc: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
-                            { name: "Double Chirpy Fun Burger", desc: "Çift kat çıtır tavuk, çift cheddar, marul, turşu, özel B&F köri sos + Patates.", price: "480 TL", image: "" }
+                            { name: "Double Curry Fun Burger", desc: "Çift kat çıtır tavuk, çift cheddar, marul, turşu, özel B&F köri sos + Patates.", price: "480 TL", image: "" }
                         ]
                     },
                     {
@@ -424,7 +424,7 @@
                             { name: "Bun&Fun Burger", desc: "120 gr. beef patty, smoked beef, cheddar cheese, crispy onions, pickles, lettuce, garlic sauce + potatoes", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
                             { name: "Chicken Fun Burger", desc: "Crispy chicken, lettuce, pickles, ranch sauce + potatoes.", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
                             { name: "BBQ Chicken Fun Burger", desc: "Crispy chicken, grilled onions, lettuce, barbecue sauce + potatoes.", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
-                            { name: "Double Chirpy Fun Burger", desc: "Double layer crispy chicken, double cheddar, lettuce, pickles, special B&F curry sauce + fries.", price: "480 TL", image: "" }
+                            { name: "Double Curry Fun Burger", desc: "Double layer crispy chicken, double cheddar, lettuce, pickles, special B&F curry sauce + fries.", price: "480 TL", image: "" }
                         ]
                     },
                     {
@@ -526,7 +526,7 @@
                             { name: "Бургер \"Бан и Фан\"", desc: "Говяжья котлета (120 г), копченая говядина, сыр чеддер, хрустящий лук, соленые огурцы, салат, чесночный соус + картофель", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
                             { name: "Куриный бургер \"Фан\"", desc: "Хрустящая курица, салат-латук, соленые огурцы, соус ранч и картофель.", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
                             { name: "Бургер \"Веселый бургер с курицей барбекю\"", desc: "Хрустящая курица, жареный лук, салат, соус барбекю и картофель.", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
-                            { name: "Двойной бургер \"Веселый бургер с чири\"", desc: "Двойной слой хрустящей курицы, двойной слой чеддера, салат, соленые огурцы, фирменный соус карри B&F + картофель фри.", price: "480 TL", image: "" }
+                            { name: "Двойной бургер \"Веселый бургер с карри\"", desc: "Двойной слой хрустящей курицы, двойной слой чеддера, салат, соленые огурцы, фирменный соус карри B&F + картофель фри.", price: "480 TL", image: "" }
                         ]
                     },
                     {
@@ -616,12 +616,10 @@
         let currentCatIndex = 0;
 
         function goToPage(pageId) {
-            // Önce bütün sayfaları kesin olarak gizle
             document.querySelectorAll('.page').forEach(p => {
                 p.classList.remove('active');
             });
             
-            // Sadece istenen sayfayı aç
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active');
