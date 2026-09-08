@@ -44,19 +44,23 @@
             width: 100%;
             flex-grow: 1;
         }
+        
+        /* EKRAN GEÇİŞLERİ İÇİN KESİN GİZLEME/GÖSTERME */
         .page {
-            display: none;
+            display: none !important;
         }
         .page.active {
-            display: block;
+            display: block !important;
         }
-        #page-language {
-            display: flex;
+
+        #page-language.active {
+            display: flex !important;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 60vh;
         }
+
         .lang-buttons {
             display: flex;
             flex-direction: column;
@@ -265,7 +269,7 @@
             </div>
         </div>
 
-        <!-- 2. Kategoriler Ekranı (Geri tuşu ile Dil Seçimine döner) -->
+        <!-- 2. Kategoriler Ekranı -->
         <div id="page-categories" class="page">
             <div class="back-bar">
                 <button class="back-btn" onclick="goToPage('page-language')">← <span id="txt-back-lang">Dil Seçimi</span></button>
@@ -274,7 +278,7 @@
             <div id="category-container" class="category-grid"></div>
         </div>
 
-        <!-- 3. Ürünler Ekranı (Geri tuşu ile Kategorilere döner) -->
+        <!-- 3. Ürünler Ekranı -->
         <div id="page-products" class="page">
             <div class="back-bar">
                 <button class="back-btn" onclick="goToPage('page-categories')">← <span id="txt-back-cat">Kategoriler</span></button>
@@ -283,7 +287,7 @@
             <div id="product-container" class="product-list"></div>
         </div>
 
-        <!-- 4. Ürün Detay Ekranı (Geri tuşu ile Ürünlere döner) -->
+        <!-- 4. Ürün Detay Ekranı -->
         <div id="page-detail" class="page">
             <div class="back-bar">
                 <button class="back-btn" onclick="backToProducts()">← <span id="txt-back-prod">Ürünlere Dön</span></button>
@@ -612,7 +616,12 @@
         let currentCatIndex = 0;
 
         function goToPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Önce bütün sayfaları kesin olarak gizle
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+            
+            // Sadece istenen sayfayı aç
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active');
@@ -623,7 +632,6 @@
         function selectLanguage(lang) {
             currentLang = lang;
             
-            // Metinleri seçilen dile göre güncelle
             document.getElementById('txt-back-lang').innerText = menuData[lang].backLang;
             document.getElementById('txt-back-cat').innerText = menuData[lang].backCat;
             document.getElementById('txt-back-prod').innerText = menuData[lang].backProd;
