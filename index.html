@@ -250,6 +250,7 @@
 
     <div class="container" id="main-container">
         
+        <!-- 1. Dil Seçim Ekranı (İlk Açılış) -->
         <div id="page-language" class="page active">
             <div class="lang-buttons">
                 <button class="lang-btn" onclick="selectLanguage('tr')">
@@ -264,11 +265,16 @@
             </div>
         </div>
 
+        <!-- 2. Kategoriler Ekranı (Geri tuşu ile Dil Seçimine döner) -->
         <div id="page-categories" class="page">
+            <div class="back-bar">
+                <button class="back-btn" onclick="goToPage('page-language')">← <span id="txt-back-lang">Dil Seçimi</span></button>
+            </div>
             <div class="section-title" id="txt-cat-title">Kategoriler</div>
             <div id="category-container" class="category-grid"></div>
         </div>
 
+        <!-- 3. Ürünler Ekranı (Geri tuşu ile Kategorilere döner) -->
         <div id="page-products" class="page">
             <div class="back-bar">
                 <button class="back-btn" onclick="goToPage('page-categories')">← <span id="txt-back-cat">Kategoriler</span></button>
@@ -277,6 +283,7 @@
             <div id="product-container" class="product-list"></div>
         </div>
 
+        <!-- 4. Ürün Detay Ekranı (Geri tuşu ile Ürünlere döner) -->
         <div id="page-detail" class="page">
             <div class="back-bar">
                 <button class="back-btn" onclick="backToProducts()">← <span id="txt-back-prod">Ürünlere Dön</span></button>
@@ -294,6 +301,7 @@
     <script>
         const menuData = {
             tr: {
+                backLang: "Dil Seçimi",
                 backCat: "Kategoriler",
                 backProd: "Ürünlere Dön",
                 catTitle: "Kategoriler",
@@ -395,6 +403,7 @@
                 ]
             },
             en: {
+                backLang: "Language",
                 backCat: "Categories",
                 backProd: "Back to Products",
                 catTitle: "Categories",
@@ -496,6 +505,7 @@
                 ]
             },
             ru: {
+                backLang: "Язык",
                 backCat: "Категории",
                 backProd: "Назад к товарам",
                 catTitle: "Категории",
@@ -613,11 +623,8 @@
         function selectLanguage(lang) {
             currentLang = lang;
             
-            const langPage = document.getElementById('page-language');
-            if (langPage) {
-                langPage.classList.remove('active');
-            }
-            
+            // Metinleri seçilen dile göre güncelle
+            document.getElementById('txt-back-lang').innerText = menuData[lang].backLang;
             document.getElementById('txt-back-cat').innerText = menuData[lang].backCat;
             document.getElementById('txt-back-prod').innerText = menuData[lang].backProd;
             document.getElementById('txt-cat-title').innerText = menuData[lang].catTitle;
