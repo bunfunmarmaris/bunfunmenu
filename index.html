@@ -45,7 +45,6 @@
             flex-grow: 1;
         }
         
-        /* EKRAN GEÇİŞLERİ İÇİN KESİN GİZLEME/GÖSTERME */
         .page {
             display: none !important;
         }
@@ -254,7 +253,7 @@
 
     <div class="container" id="main-container">
         
-        <!-- 1. Dil Seçim Ekranı (İlk Açılış) -->
+        <!-- 1. Dil Seçim Ekranı -->
         <div id="page-language" class="page active">
             <div class="lang-buttons">
                 <button class="lang-btn" onclick="selectLanguage('tr')">
@@ -314,14 +313,14 @@
                     {
                         name: "BURGERLER",
                         products: [
-                            { name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
-                            { name: "Islak Cheeseburger", desc: "Dana burger köftesi, cheddar, özel sos.", price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg" },
-                            { name: "Islak Lüksburger", desc: "Dana burger köftesi, Amerikan Salatası, özel sos.", price: "170 TL", image: "images/islakluksburger.jpg.jpeg" },
-                            { name: "Fun Smash Burger", desc: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", price: "560 TL", image: "images/funsmashburger.jpg.jpeg" },
-                            { name: "Heat Fun Burger", desc: "2x60 gr. smash dana köfte, cheddar, ızgara soğan, sriracha sos + Patates", price: "550 TL", image: "images/heatfunburger.jpg.jpeg" },
-                            { name: "Bun&Fun Burger", desc: "120 gr. dana köfte, dana füme, cheddar, çıtır soğan, turşu, marul, garlic sos + Patates", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
-                            { name: "Chicken Fun Burger", desc: "Çıtır tavuk, marul, turşu, ranch sos + Patates", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
-                            { name: "BBQ Chicken Fun Burger", desc: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
+                            { name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg" },
+                            { name: "Islak Cheeseburger", desc: "Dana burger köftesi, cheddar, özel sos.", price: "170 TL", image: "images/islakcheeseburger.jpg" },
+                            { name: "Islak Lüksburger", desc: "Dana burger köftesi, Amerikan Salatası, özel sos.", price: "170 TL", image: "images/islakluksburger.jpg" },
+                            { name: "Fun Smash Burger", desc: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", price: "560 TL", image: "images/funsmashburger.jpg" },
+                            { name: "Heat Fun Burger", desc: "2x60 gr. smash dana köfte, cheddar, ızgara soğan, sriracha sos + Patates", price: "550 TL", image: "images/heatfunburger.jpg" },
+                            { name: "Bun&Fun Burger", desc: "120 gr. dana köfte, dana füme, cheddar, çıtır soğan, turşu, marul, garlic sos + Patates", price: "650 TL", image: "images/bunfunburger.jpg" },
+                            { name: "Chicken Fun Burger", desc: "Çıtır tavuk, marul, turşu, ranch sos + Patates", price: "450 TL", image: "images/chickenfunburger.jpg" },
+                            { name: "BBQ Chicken Fun Burger", desc: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", price: "480 TL", image: "images/bbqchickenfunburger.jpg" },
                             { name: "Double Curry Fun Burger", desc: "Çift kat çıtır tavuk, çift cheddar, marul, turşu, özel B&F köri sos + Patates.", price: "480 TL", image: "" }
                         ]
                     },
@@ -339,23 +338,23 @@
                     {
                         name: "SICAK SANDVİÇLER",
                         products: [
-                            { name: "Sosisli", desc: "Özel soslu sosis, turşu, ketçap, mayonez.", price: "150 TL", image: "images/sosisli.jpg.jpeg" },
-                            { name: "Goralı", desc: "Özel soslu sosis, turşu, Amerikan Salatası, ketçap, mayonez.", price: "170 TL", image: "images/gorali.jpg.jpeg" },
-                            { name: "Patso", desc: "Patates kızartması, ketçap, mayonez", price: "220 TL", image: "images/patso:jpg.jpeg" },
-                            { name: "Cheese Patso", desc: "Patates kızartması, kaşar peyniri, cheddar peyniri, ketçap, mayonez.", price: "250 TL", image: "images/cheesepatso.jpg.jpeg" },
-                            { name: "Sosisli Patso", desc: "Patates kızartması, jülyen sosis, ketçap, mayonez.", price: "280 TL", image: "images/sosislipatso.jpg.jpeg" },
-                            { name: "Karışık Patso", desc: "Patates kızartması, jülyen sosis, sucuk, kaşar peyniri, ketçap, mayonez.", price: "320 TL", image: "images/karisikpatso.jpg.jpeg" },
-                            { name: "Kumru", desc: "Sosis, salam, sucuk, turşu, cheddar peyniri, kaşar peyniri, ketçap, mayonez.", price: "350 TL", image: "images/kumru.jpg.jpeg" }
+                            { name: "Sosisli", desc: "Özel soslu sosis, turşu, ketçap, mayonez.", price: "150 TL", image: "images/sosisli.jpg" },
+                            { name: "Goralı", desc: "Özel soslu sosis, turşu, Amerikan Salatası, ketçap, mayonez.", price: "170 TL", image: "images/gorali.jpg" },
+                            { name: "Patso", desc: "Patates kızartması, ketçap, mayonez", price: "220 TL", image: "images/patso.jpg" },
+                            { name: "Cheese Patso", desc: "Patates kızartması, kaşar peyniri, cheddar peyniri, ketçap, mayonez.", price: "250 TL", image: "images/cheesepatso.jpg" },
+                            { name: "Sosisli Patso", desc: "Patates kızartması, jülyen sosis, ketçap, mayonez.", price: "280 TL", image: "images/sosislipatso.jpg" },
+                            { name: "Karışık Patso", desc: "Patates kızartması, jülyen sosis, sucuk, kaşar peyniri, ketçap, mayonez.", price: "320 TL", image: "images/karisikpatso.jpg" },
+                            { name: "Kumru", desc: "Sosis, salam, sucuk, turşu, cheddar peyniri, kaşar peyniri, ketçap, mayonez.", price: "350 TL", image: "images/kumru.jpg" }
                         ]
                     },
                     {
                         name: "TOSTLAR",
                         products: [
-                            { name: "Kaşarlı Tost", desc: "Kaşar peyniri.", price: "200 TL", image: "images/kasarlitost.jpg.jpeg" },
-                            { name: "Karışık Tost", desc: "Kaşar peyniri, kasap sucuk.", price: "250 TL", image: "images/karisiktost.jpg.jpeg" },
-                            { name: "Yengen Tost", desc: "Kaşar peyniri, kasap sucuk, domates, turşu, ketçap, mayonez.", price: "280 TL", image: "images/yengentost.jpg.jpeg" },
-                            { name: "Süper Ayvalık Tostu", desc: "Kaşar peyniri, kasap sucuk, sosis, Amerikan Salatası, turşu, ketçap, mayonez.", price: "320 TL", image: "images/ayvaliktost.jpg.jpeg" },
-                            { name: "Cheddar Bomb Tost", desc: "Cheddar peyniri, kasap sucuk, sosis, turşu.", price: "320 TL", image: "images/cheddarbombtost.jpg.jpeg" }
+                            { name: "Kaşarlı Tost", desc: "Kaşar peyniri.", price: "200 TL", image: "images/kasarlitost.jpg" },
+                            { name: "Karışık Tost", desc: "Kaşar peyniri, kasap sucuk.", price: "250 TL", image: "images/karisiktost.jpg" },
+                            { name: "Yengen Tost", desc: "Kaşar peyniri, kasap sucuk, domates, turşu, ketçap, mayonez.", price: "280 TL", image: "images/yengentost.jpg" },
+                            { name: "Süper Ayvalık Tostu", desc: "Kaşar peyniri, kasap sucuk, sosis, Amerikan Salatası, turşu, ketçap, mayonez.", price: "320 TL", image: "images/ayvaliktost.jpg" },
+                            { name: "Cheddar Bomb Tost", desc: "Cheddar peyniri, kasap sucuk, sosis, turşu.", price: "320 TL", image: "images/cheddarbombtost.jpg" }
                         ]
                     },
                     {
@@ -416,14 +415,14 @@
                     {
                         name: "BURGERS",
                         products: [
-                            { name: "Wet Hamburger", desc: "Beef burger patty, special sauce.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
-                            { name: "Wet Cheeseburger", desc: "Beef burger patty, cheddar cheese, and special sauce.", price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg" },
-                            { name: "Wet Luxury Burger", desc: "Beef burger patty, American salad, special sauce.", price: "170 TL", image: "images/islakluksburger.jpg.jpeg" },
-                            { name: "Fun Smash Burger", desc: "2 x 60 gr. smash beef patties, cheddar cheese, crispy onions, pickles, special burger sauce + fries", price: "560 TL", image: "images/funsmashburger.jpg.jpeg" },
-                            { name: "Heat Fun Burger", desc: "2 x 60 gr. smash beef patties, cheddar cheese, grilled onions, sriracha sauce + potatoes", price: "550 TL", image: "images/heatfunburger.jpg.jpeg" },
-                            { name: "Bun&Fun Burger", desc: "120 gr. beef patty, smoked beef, cheddar cheese, crispy onions, pickles, lettuce, garlic sauce + potatoes", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
-                            { name: "Chicken Fun Burger", desc: "Crispy chicken, lettuce, pickles, ranch sauce + potatoes.", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
-                            { name: "BBQ Chicken Fun Burger", desc: "Crispy chicken, grilled onions, lettuce, barbecue sauce + potatoes.", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
+                            { name: "Wet Hamburger", desc: "Beef burger patty, special sauce.", price: "150 TL", image: "images/islakhamburger.jpg" },
+                            { name: "Wet Cheeseburger", desc: "Beef burger patty, cheddar cheese, and special sauce.", price: "170 TL", image: "images/islakcheeseburger.jpg" },
+                            { name: "Wet Luxury Burger", desc: "Beef burger patty, American salad, special sauce.", price: "170 TL", image: "images/islakluksburger.jpg" },
+                            { name: "Fun Smash Burger", desc: "2 x 60 gr. smash beef patties, cheddar cheese, crispy onions, pickles, special burger sauce + fries", price: "560 TL", image: "images/funsmashburger.jpg" },
+                            { name: "Heat Fun Burger", desc: "2 x 60 gr. smash beef patties, cheddar cheese, grilled onions, sriracha sauce + potatoes", price: "550 TL", image: "images/heatfunburger.jpg" },
+                            { name: "Bun&Fun Burger", desc: "120 gr. beef patty, smoked beef, cheddar cheese, crispy onions, pickles, lettuce, garlic sauce + potatoes", price: "650 TL", image: "images/bunfunburger.jpg" },
+                            { name: "Chicken Fun Burger", desc: "Crispy chicken, lettuce, pickles, ranch sauce + potatoes.", price: "450 TL", image: "images/chickenfunburger.jpg" },
+                            { name: "BBQ Chicken Fun Burger", desc: "Crispy chicken, grilled onions, lettuce, barbecue sauce + potatoes.", price: "480 TL", image: "images/bbqchickenfunburger.jpg" },
                             { name: "Double Curry Fun Burger", desc: "Double layer crispy chicken, double cheddar, lettuce, pickles, special B&F curry sauce + fries.", price: "480 TL", image: "" }
                         ]
                     },
@@ -441,23 +440,23 @@
                     {
                         name: "HOT SANDWICHES",
                         products: [
-                            { name: "Hot dog", desc: "Sausage with special sauce, pickles, ketchup, mayonnaise.", price: "150 TL", image: "images/sosisli.jpg.jpeg" },
-                            { name: "Gorali", desc: "Sausage with special sauce, pickles, American salad, ketchup, mayonnaise.", price: "170 TL", image: "images/gorali.jpg.jpeg" },
-                            { name: "Patso", desc: "French fries, ketchup, mayonnaise", price: "220 TL", image: "images/patso.jpg.jpeg" },
-                            { name: "Cheese Patso", desc: "French fries, mozzarella cheese, cheddar cheese, ketchup, mayonnaise.", price: "250 TL", image: "images/cheesepatso.jpg.jpeg" },
-                            { name: "Sausage Patso", desc: "French fries, julienne sausage, ketchup, mayonnaise.", price: "280 TL", image: "images/sosislipatso.jpg.jpeg" },
-                            { name: "Mixed Patso", desc: "French fries, julienne sausage, Turkish sausage (sucuk), cheddar cheese, ketchup, mayonnaise.", price: "320 TL", image: "images/karisikpatso.jpg.jpeg" },
-                            { name: "Dove", desc: "Sausage, salami, Turkish sausage, pickles, cheddar cheese, kashar cheese, ketchup, mayonnaise.", price: "350 TL", image: "images/kumru.jpg.jpeg" }
+                            { name: "Hot dog", desc: "Sausage with special sauce, pickles, ketchup, mayonnaise.", price: "150 TL", image: "images/sosisli.jpg" },
+                            { name: "Gorali", desc: "Sausage with special sauce, pickles, American salad, ketchup, mayonnaise.", price: "170 TL", image: "images/gorali.jpg" },
+                            { name: "Patso", desc: "French fries, ketchup, mayonnaise", price: "220 TL", image: "images/patso.jpg" },
+                            { name: "Cheese Patso", desc: "French fries, mozzarella cheese, cheddar cheese, ketchup, mayonnaise.", price: "250 TL", image: "images/cheesepatso.jpg" },
+                            { name: "Sausage Patso", desc: "French fries, julienne sausage, ketchup, mayonnaise.", price: "280 TL", image: "images/sosislipatso.jpg" },
+                            { name: "Mixed Patso", desc: "French fries, julienne sausage, Turkish sausage (sucuk), cheddar cheese, ketchup, mayonnaise.", price: "320 TL", image: "images/karisikpatso.jpg" },
+                            { name: "Dove", desc: "Sausage, salami, Turkish sausage, pickles, cheddar cheese, kashar cheese, ketchup, mayonnaise.", price: "350 TL", image: "images/kumru.jpg" }
                         ]
                     },
                     {
                         name: "TOASTS",
                         products: [
-                            { name: "Cheese Toast", desc: "Kashar cheese.", price: "200 TL", image: "images/kasarlitost.jpg.jpeg" },
-                            { name: "Mixed Toast", desc: "Kashar cheese, butcher's sausage.", price: "250 TL", image: "images/karisiktost.jpg.jpeg" },
-                            { name: "Yengen Toast", desc: "Kashar cheese, butcher's sausage, tomatoes, pickles, ketchup, mayonnaise.", price: "280 TL", image: "images/yengentost.jpg.jpeg" },
-                            { name: "Super Ayvalık Toast", desc: "Kashar cheese, butcher's sausage, regular sausage, American salad, pickles, ketchup, mayonnaise.", price: "320 TL", image: "images/ayvaliktost.jpg.jpeg" },
-                            { name: "Cheddar Bomb Toast", desc: "Cheddar cheese, butcher's sausage, regular sausage, pickles.", price: "320 TL", image: "images/cheddarbombtost.jpg.jpeg" }
+                            { name: "Cheese Toast", desc: "Kashar cheese.", price: "200 TL", image: "images/kasarlitost.jpg" },
+                            { name: "Mixed Toast", desc: "Kashar cheese, butcher's sausage.", price: "250 TL", image: "images/karisiktost.jpg" },
+                            { name: "Yengen Toast", desc: "Kashar cheese, butcher's sausage, tomatoes, pickles, ketchup, mayonnaise.", price: "280 TL", image: "images/yengentost.jpg" },
+                            { name: "Super Ayvalık Toast", desc: "Kashar cheese, butcher's sausage, regular sausage, American salad, pickles, ketchup, mayonnaise.", price: "320 TL", image: "images/ayvaliktost.jpg" },
+                            { name: "Cheddar Bomb Toast", desc: "Cheddar cheese, butcher's sausage, regular sausage, pickles.", price: "320 TL", image: "images/cheddarbombtost.jpg" }
                         ]
                     },
                     {
@@ -518,14 +517,14 @@
                     {
                         name: "БУРГЕРЫ",
                         products: [
-                            { name: "Влажный гамбургер", desc: "Котлета из говядины для бургера, фирменный соус.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
-                            { name: "Мокрый чизбургер", desc: "Котлета из говядины, сыр чеддер и фирменный соус.", price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg" },
-                            { name: "Бургер \"Влажная роскошь\"", desc: "Котлета из говядины для бургера, американский салат, фирменный соус.", price: "170 TL", image: "images/islakluksburger.jpg.jpeg" },
-                            { name: "Бургер \"Fun Smash\"", desc: "2 котлеты из говядины по 60 г, сыр чеддер, хрустящий лук, соленые огурцы, специальный соус для бургеров + картофель фри", price: "560 TL", image: "images/funsmashburger.jpg.jpeg" },
-                            { name: "Бургер Heat Fun", desc: "2 котлеты из говядины по 60 г, сыр чеддер, жареный лук, соус шрирача + картофель", price: "550 TL", image: "images/heatfunburger.jpg.jpeg" },
-                            { name: "Бургер \"Бан и Фан\"", desc: "Говяжья котлета (120 г), копченая говядина, сыр чеддер, хрустящий лук, соленые огурцы, салат, чесночный соус + картофель", price: "650 TL", image: "images/bunfunburger.jpg.jpeg" },
-                            { name: "Куриный бургер \"Фан\"", desc: "Хрустящая курица, салат-латук, соленые огурцы, соус ранч и картофель.", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg" },
-                            { name: "Бургер \"Веселый бургер с курицей барбекю\"", desc: "Хрустящая курица, жареный лук, салат, соус барбекю и картофель.", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg" },
+                            { name: "Влажный гамбургер", desc: "Котлета из говядины для бургера, фирменный соус.", price: "150 TL", image: "images/islakhamburger.jpg" },
+                            { name: "Мокрый чизбургер", desc: "Котлета из говядины, сыр чеддер и фирменный соус.", price: "170 TL", image: "images/islakcheeseburger.jpg" },
+                            { name: "Бургер \"Влажная роскошь\"", desc: "Котлета из говядины для бургера, американский салат, фирменный соус.", price: "170 TL", image: "images/islakluksburger.jpg" },
+                            { name: "Бургер \"Fun Smash\"", desc: "2 котлеты из говядины по 60 г, сыр чеддер, хрустящий лук, соленые огурцы, специальный соус для бургеров + картофель фри", price: "560 TL", image: "images/funsmashburger.jpg" },
+                            { name: "Бургер Heat Fun", desc: "2 котлеты из говядины по 60 г, сыр чеддер, жареный лук, соус шрирача + картофель", price: "550 TL", image: "images/heatfunburger.jpg" },
+                            { name: "Бургер \"Бан и Фан\"", desc: "Говяжья котлета (120 г), копченая говядина, сыр чеддер, хрустящий лук, соленые огурцы, салат, чесночный соус + картофель", price: "650 TL", image: "images/bunfunburger.jpg" },
+                            { name: "Куриный бургер \"Фан\"", desc: "Хрустящая курица, салат-латук, соленые огурцы, соус ранч и картофель.", price: "450 TL", image: "images/chickenfunburger.jpg" },
+                            { name: "Бургер \"Веселый бургер с курицей барбекю\"", desc: "Хрустящая курица, жареный лук, салат, соус барбекю и картофель.", price: "480 TL", image: "images/bbqchickenfunburger.jpg" },
                             { name: "Двойной бургер \"Веселый бургер с карри\"", desc: "Двойной слой хрустящей курицы, двойной слой чеддера, салат, соленые огурцы, фирменный соус карри B&F + картофель фри.", price: "480 TL", image: "" }
                         ]
                     },
@@ -543,23 +542,23 @@
                     {
                         name: "ГОРЯЧИЕ СЭНДВИЧИ",
                         products: [
-                            { name: "Хот-дог", desc: "Сосиска со специальным соусом, соленые огурцы, кетчуп, майонез.", price: "150 TL", image: "images/sosisli.jpg.jpeg" },
-                            { name: "Горали", desc: "Сосиска со специальным соусом, соленые огурцы, американский салат, кетчуп, майонез.", price: "170 TL", image: "images/gorali.jpg.jpeg" },
-                            { name: "Патсо", desc: "Картофель фри, кетчуп, майонез", price: "220 TL", image: "images/patso.jpg.jpeg" },
-                            { name: "Сырный пацо", desc: "Картофель фри, сыр моцарелла, сыр чеддер, кетчуп, майонез.", price: "250 TL", image: "images/cheesepatso.jpg.jpeg" },
-                            { name: "Сосиска Патсо", desc: "Картофель фри, нарезанная соломкой колбаса, кетчуп, майонез.", price: "280 TL", image: "images/sosislipatso.jpg.jpeg" },
-                            { name: "Смешанный Патсо", desc: "Картофель фри, колбаски, нарезанные соломкой, турецкие колбаски (суджук), сыр чеддер, кетчуп, майонез.", price: "320 TL", image: "images/karisikpatso.jpg.jpeg" },
-                            { name: "Голубь", desc: "Колбаса, салями, турецкая колбаса, соленые огурцы, сыр чеддер, сыр кашар, кетчуп, майонез.", price: "350 TL", image: "images/kumru.jpg.jpeg" }
+                            { name: "Хот-дог", desc: "Сосиска со специальным соусом, соленые огурцы, кетчуп, майонез.", price: "150 TL", image: "images/sosisli.jpg" },
+                            { name: "Горали", desc: "Сосиска со специальным соусом, соленые огурцы, американский салат, кетчуп, майонез.", price: "170 TL", image: "images/gorali.jpg" },
+                            { name: "Патсо", desc: "Картофель фри, кетчуп, майонез", price: "220 TL", image: "images/patso.jpg" },
+                            { name: "Сырный пацо", desc: "Картофель фри, сыр моцарелла, сыр чеддер, кетчуп, майонез.", price: "250 TL", image: "images/cheesepatso.jpg" },
+                            { name: "Сосиска Патсо", desc: "Картофель фри, нарезанная соломкой колбаса, кетчуп, майонез.", price: "280 TL", image: "images/sosislipatso.jpg" },
+                            { name: "Смешанный Патсо", desc: "Картофель фри, колбаски, нарезанные соломкой, турецкие колбаски (суджук), сыр чеддер, кетчуп, майонез.", price: "320 TL", image: "images/karisikpatso.jpg" },
+                            { name: "Голубь", desc: "Колбаса, салями, турецкая колбаса, соленые огурцы, сыр чеддер, сыр кашар, кетчуп, майонез.", price: "350 TL", image: "images/kumru.jpg" }
                         ]
                     },
                     {
                         name: "ТОСТЫ",
                         products: [
-                            { name: "Сырный тост", desc: "Сыр Кашар.", price: "200 TL", image: "images/kasarlitost.jpg.jpeg" },
-                            { name: "Тосты с разными начинками", desc: "Сыр Кашар, мясная колбаса.", price: "250 TL", image: "images/karisiktost.jpg.jpeg" },
-                            { name: "Тост Йенген", desc: "Сыр Кашар, мясная колбаса, помидоры, соленые огурцы, кетчуп, майонез.", price: "280 TL", image: "images/yengentost.jpg.jpeg" },
-                            { name: "Супер Айвалык Тост", desc: "Сыр Кашар, мясная колбаса, обычная колбаса, американский салат, соленые огурцы, кетчуп, майонез.", price: "320 TL", image: "images/ayvaliktost.jpg.jpeg" },
-                            { name: "Тост \"Чеддер Бомб\"", desc: "Сыр чеддер, мясная колбаса, обычная колбаса, соленые огурцы.", price: "320 TL", image: "images/cheddarbombtost.jpg.jpeg" }
+                            { name: "Сырный тост", desc: "Сыр Кашар.", price: "200 TL", image: "images/kasarlitost.jpg" },
+                            { name: "Тосты с разными начинками", desc: "Сыр Кашар, мясная колбаса.", price: "250 TL", image: "images/karisiktost.jpg" },
+                            { name: "Тост Йенген", desc: "Сыр Кашар, мясная колбаса, помидоры, соленые огурцы, кетчуп, майонез.", price: "280 TL", image: "images/yengentost.jpg" },
+                            { name: "Супер Айвалык Тост", desc: "Сыр Кашар, мясная колбаса, обычная колбаса, американский салат, соленые огурцы, кетчуп, майонез.", price: "320 TL", image: "images/ayvaliktost.jpg" },
+                            { name: "Тост \"Чеддер Бомб\"", desc: "Сыр чеддер, мясная колбаса, обычная колбаса, соленые огурцы.", price: "320 TL", image: "images/cheddarbombtost.jpg" }
                         ]
                     },
                     {
