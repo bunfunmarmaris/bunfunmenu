@@ -167,7 +167,7 @@
             height: 75px;
             border-radius: 8px;
             object-fit: cover;
-            background-color: #eee;
+            background-color: #eaeaea;
             flex-shrink: 0;
         }
         .product-info {
@@ -204,7 +204,7 @@
             max-height: 250px;
             object-fit: cover;
             border-radius: 12px;
-            background-color: #eee;
+            background-color: #eaeaea;
             margin-bottom: 20px;
         }
         .detail-title {
@@ -271,7 +271,7 @@
                 <button class="back-btn" onclick="backToProducts()">← <span id="txt-back-prod">Ürünlere Dön</span></button>
             </div>
             <div class="detail-box">
-                <img id="detail-img" class="detail-img" src="" alt="Ürün Görseli" onerror="this.style.display='none'">
+                <img id="detail-img" class="detail-img" src="" alt="Ürün Görseli" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'><rect width=\'300\' height=\'200\' fill=\'%23eaeaea\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23999999\' font-family=\'Poppins, sans-serif\' font-size=\'14\'>BUN & FUN</text></svg>'">
                 <h2 id="detail-title" class="detail-title">Ürün Adı</h2>
                 <p id="detail-desc" class="detail-desc">Açıklama</p>
                 <div id="detail-price" class="detail-price">0 TL</div>
@@ -573,7 +573,7 @@
                             { name: "Фруктовая газировка", desc: "Персик / Лимон / Манго", price: "70 TL", image: "images/meyvelisoda.jpg" },
                             { name: "Лимонад", desc: "Домашний лимонад", price: "160 TL", image: "images/limonata.jpg" },
                             { name: "Фруктовый сок", desc: "Фруктовый сок в коробках", price: "90 TL", image: "images/cappy.jpg" },
-                            { name: "Кока-Кола", desc: "банка 330 мл", price: "90 TL", image: "images/cocacola.jpg" },
+                            { name: "Кока-Кола", desc: "банка 330 мл", price: "90 TL", image: "pages/cocacola.jpg" },
                             { name: "Coca-Cola Zero", desc: "банка 330 мл", price: "90 TL", image: "images/cocacolazero.jpg" },
                             { name: "Чай Фьюз", desc: "Чай со льдом в коробке", price: "90 TL", image: "images/fusetea.jpg" },
                             { name: "Фанта", desc: "банка 330 мл", price: "90 TL", image: "images/fanta.jpg" },
@@ -636,8 +636,12 @@
             cat.products.forEach((prod) => {
                 const pCard = document.createElement('div');
                 pCard.className = 'product-card';
+                
+                // SVG Placeholder fallback eklendi (resim yüklenemezse şık gri bir alan gösterir)
+                const fallbackSvg = "data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'><rect width=\'150\' height=\'150\' fill=\'%23eaeaea\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23aaaaaa\' font-family=\'Poppins, sans-serif\' font-size=\'11\'>BUN&FUN</text></svg>";
+
                 pCard.innerHTML = `
-                    <img class="product-thumb" src="${prod.image || ''}" alt="${prod.name}" onerror="this.style.display='none'">
+                    <img class="product-thumb" src="${prod.image || ''}" alt="${prod.name}" onerror="this.src='${fallbackSvg}'">
                     <div class="product-info">
                         <div class="product-name">${prod.name}</div>
                         <div class="product-desc-preview">${prod.desc}</div>
@@ -657,7 +661,6 @@
 
         function openProductDetail(prod) {
             const imgEl = document.getElementById('detail-img');
-            imgEl.style.display = 'block';
             imgEl.src = prod.image || '';
             
             document.getElementById('detail-title').innerText = prod.name;
