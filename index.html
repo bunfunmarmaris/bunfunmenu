@@ -158,6 +158,22 @@
             background-color: #eaeaea;
             flex-shrink: 0;
         }
+        .product-thumb-placeholder {
+            width: 75px;
+            height: 75px;
+            border-radius: 8px;
+            background-color: #e5e5e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            font-weight: 600;
+            padding: 4px;
+            flex-shrink: 0;
+            line-height: 1.2;
+        }
         .product-info {
             flex-grow: 1;
         }
@@ -191,6 +207,19 @@
             object-fit: cover;
             border-radius: 12px;
             background-color: #eaeaea;
+            margin-bottom: 20px;
+        }
+        .detail-img-placeholder {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            background-color: #e5e5e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
             margin-bottom: 20px;
         }
         .detail-title {
@@ -253,7 +282,7 @@
                 <button class="back-btn" onclick="backToProducts()">← <span id="txt-back-prod">Ürünlere Dön</span></button>
             </div>
             <div class="detail-box">
-                <img id="detail-img" class="detail-img" src="" alt="Ürün Görseli" style="display:none;">
+                <div id="detail-img-container"></div>
                 <h2 id="detail-title" class="detail-title">Ürün Adı</h2>
                 <p id="detail-desc" class="detail-desc">Açıklama</p>
                 <div id="detail-price" class="detail-price">0 TL</div>
@@ -268,6 +297,7 @@
                 backCat: "Kategoriler",
                 backProd: "Ürünlere Dön",
                 catTitle: "Kategoriler",
+                soonText: "Görseller Çok Yakında",
                 categories: [
                     {
                         name: "BURGERLER",
@@ -368,6 +398,7 @@
                 backCat: "Categories",
                 backProd: "Back to Products",
                 catTitle: "Categories",
+                soonText: "Photos Coming Soon",
                 categories: [
                     {
                         name: "BURGERS",
@@ -468,6 +499,7 @@
                 backCat: "Категории",
                 backProd: "Назад к товарам",
                 catTitle: "Категории",
+                soonText: "Фото скоро будут",
                 categories: [
                     {
                         name: "БУРГЕРЫ",
@@ -610,6 +642,7 @@
         function openCategory(catIndex) {
             currentCatIndex = catIndex;
             const cat = menuData[currentLang].categories[catIndex];
+            const dataLang = menuData[currentLang];
             document.getElementById('product-section-title').innerText = cat.name;
 
             const container = document.getElementById('product-container');
@@ -622,6 +655,8 @@
                 let thumbHtml = '';
                 if (prod.image && prod.image.trim() !== "") {
                     thumbHtml = `<img class="product-thumb" src="${prod.image}" alt="${prod.name}">`;
+                } else {
+                    thumbHtml = `<div class="product-thumb-placeholder">${dataLang.soonText}</div>`;
                 }
 
                 pCard.innerHTML = `
@@ -644,13 +679,21 @@
         }
 
         function openProductDetail(prod) {
-            const imgEl = document.getElementById('detail-img');
+            const containerEl = document.getElementById('detail-img-container');
+            const dataLang = menuData[currentLang];
+            containerEl.innerHTML = '';
+
             if (prod.image && prod.image.trim() !== "") {
+                const imgEl = document.createElement('img');
+                imgEl.className = 'detail-img';
                 imgEl.src = prod.image;
-                imgEl.style.display = 'block';
+                imgEl.alt = prod.name;
+                containerEl.appendChild(imgEl);
             } else {
-                imgEl.src = '';
-                imgEl.style.display = 'none';
+                const placeholderEl = document.createElement('div');
+                placeholderEl.className = 'detail-img-placeholder';
+                placeholderEl.innerText = dataLang.soonText;
+                containerEl.appendChild(placeholderEl);
             }
 
             document.getElementById('detail-title').innerText = prod.name;
