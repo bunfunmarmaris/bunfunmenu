@@ -271,7 +271,7 @@
                 <button class="back-btn" onclick="backToProducts()">← <span id="txt-back-prod">Ürünlere Dön</span></button>
             </div>
             <div class="detail-box">
-                <img id="detail-img" class="detail-img" src="" alt="Ürün Görseli">
+                <img id="detail-img" class="detail-img" src="" alt="Ürün Görseli" onerror="this.style.display='none'">
                 <h2 id="detail-title" class="detail-title">Ürün Adı</h2>
                 <p id="detail-desc" class="detail-desc">Açıklama</p>
                 <div id="detail-price" class="detail-price">0 TL</div>
@@ -290,7 +290,7 @@
                     {
                         name: "BURGERLER",
                         products: [
-                            { name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
+                            { name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg" },
                             { name: "Islak Cheeseburger", desc: "Dana burger köftesi, cheddar, özel sos.", price: "170 TL", image: "images/islakcheeseburger.jpg" },
                             { name: "Islak Lüksburger", desc: "Dana burger köftesi, Amerikan Salatası, özel sos.", price: "170 TL", image: "images/islakluksburger.jpg" },
                             { name: "Fun Smash Burger", desc: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", price: "560 TL", image: "images/funsmashburger.jpg" },
@@ -390,7 +390,7 @@
                     {
                         name: "BURGERS",
                         products: [
-                            { name: "Wet Hamburger", desc: "Beef burger patty, special sauce.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
+                            { name: "Wet Hamburger", desc: "Beef burger patty, special sauce.", price: "150 TL", image: "images/islakhamburger.jpg" },
                             { name: "Wet Cheeseburger", desc: "Beef burger patty, cheddar cheese, and special sauce.", price: "170 TL", image: "images/islakcheeseburger.jpg" },
                             { name: "Wet Luxury Burger", desc: "Beef burger patty, American salad, special sauce.", price: "170 TL", image: "images/islakluksburger.jpg" },
                             { name: "Fun Smash Burger", desc: "2 x 60 gr. smash beef patties, cheddar cheese, crispy onions, pickles, special burger sauce + fries", price: "560 TL", image: "images/funsmashburger.jpg" },
@@ -490,7 +490,7 @@
                     {
                         name: "БУРГЕРЫ",
                         products: [
-                            { name: "Влажный гамбургер", desc: "Котлета из говядины для бургера, фирменный соус.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg" },
+                            { name: "Влажный гамбургер", desc: "Котлета из говядины для бургера, фирменный соус.", price: "150 TL", image: "images/islakhamburger.jpg" },
                             { name: "Мокрый чизбургер", desc: "Котлета из говядины, сыр чеддер и фирменный соус.", price: "170 TL", image: "images/islakcheeseburger.jpg" },
                             { name: "Бургер \"Влажная роскошь\"", desc: "Котлета из говядины для бургера, американский салат, фирменный соус.", price: "170 TL", image: "images/islakluksburger.jpg" },
                             { name: "Бургер \"Fun Smash\"", desc: "2 котлеты из говядины по 60 г, сыр чеддер, хрустящий лук, соленые огурцы, специальный соус для бургеров + картофель фри", price: "560 TL", image: "images/funsmashburger.jpg" },
@@ -550,7 +550,7 @@
                             { name: "Меню \"Влажный гамбургер из 2 штук\"", desc: "2 гамбургера, облитых водой + картошка фри + напиток", price: "510 TL", image: "images/islakmenu.jpg" },
                             { name: "Меню хот-догов из 2 штук", desc: "2 хот-дога + картошка фри + напиток", price: "510 TL", image: "images/sosislimenu.jpg" },
                             { name: "Меню тостов «Супер Айвалык»", desc: "Айвалык Тост + картофель фри + напиток", price: "570 TL", image: "images/ayvalikmenu.jpg" },
-                            { name: "Меню Кумру", desc: "Кумru (турецкий сэндвич) + Картофель фри + Напиток", price: "590 TL", image: "images/kumrumenu.jpg" }
+                            { name: "Меню Кумру", desc: "Кумру (турецкий сэндвич) + Картофель фри + Напиток", price: "590 TL", image: "images/kumrumenu.jpg" }
                         ]
                     },
                     {
@@ -574,7 +574,7 @@
                             { name: "Лимонад", desc: "Домашний лимонад", price: "160 TL", image: "images/limonata.jpg" },
                             { name: "Фруктовый сок", desc: "Фруктовый сок в коробках", price: "90 TL", image: "images/cappy.jpg" },
                             { name: "Кока-Кола", desc: "банка 330 мл", price: "90 TL", image: "images/cocacola.jpg" },
-                            { name: "Coca-Cola Zero", desc: "банка 330 мл", price: "90 TL", image: "pages/cocacolazero.jpg" },
+                            { name: "Coca-Cola Zero", desc: "банка 330 мл", price: "90 TL", image: "images/cocacolazero.jpg" },
                             { name: "Чай Фьюз", desc: "Чай со льдом в коробке", price: "90 TL", image: "images/fusetea.jpg" },
                             { name: "Фанта", desc: "банка 330 мл", price: "90 TL", image: "images/fanta.jpg" },
                             { name: "Спрайт", desc: "банка 330 мл", price: "90 TL", image: "images/sprite.jpg" }
@@ -637,7 +637,7 @@
                 const pCard = document.createElement('div');
                 pCard.className = 'product-card';
                 pCard.innerHTML = `
-                    <img class="product-thumb" src="${prod.image || ''}" alt="${prod.name}">
+                    <img class="product-thumb" src="${prod.image || ''}" alt="${prod.name}" onerror="this.style.display='none'">
                     <div class="product-info">
                         <div class="product-name">${prod.name}</div>
                         <div class="product-desc-preview">${prod.desc}</div>
@@ -656,7 +656,10 @@
         }
 
         function openProductDetail(prod) {
-            document.getElementById('detail-img').src = prod.image || '';
+            const imgEl = document.getElementById('detail-img');
+            imgEl.style.display = 'block';
+            imgEl.src = prod.image || '';
+            
             document.getElementById('detail-title').innerText = prod.name;
             document.getElementById('detail-desc').innerText = prod.desc;
             document.getElementById('detail-price').innerText = prod.price;
