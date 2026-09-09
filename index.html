@@ -286,6 +286,14 @@
             background-color: #28a745;
             margin-bottom: 20px;
         }
+        .admin-btn-danger {
+            background-color: #d9534f;
+            padding: 6px 12px;
+            font-size: 13px;
+            width: auto;
+            border-radius: 6px;
+            margin-top: 5px;
+        }
         .admin-product-row {
             background: #fafafa;
             border: 1px solid #eee;
@@ -439,7 +447,7 @@
                     <h3 style="font-size: 16px; color: #28a745; margin-bottom: 10px;">Yeni Ürün Ekle</h3>
                     <select id="new-prod-cat" class="admin-select"></select>
                     <input type="text" id="new-prod-name" class="admin-input" placeholder="Ürün Adı">
-                    <input type="text" id="new-prod-desc" class="admin-input" placeholder="Açıklama">
+                    <input type="text" id="new-prod-desc" class="admin-input" placeholder="Açıklama (Örn: Dana köfte, cheddar)">
                     <input type="text" id="new-prod-price" class="admin-input" placeholder="Fiyat (Örn: 200 TL)">
                     <button class="admin-btn" style="background-color: #28a745;" onclick="addNewProduct()">Ürünü Listeye Ekle</button>
                 </div>
@@ -565,25 +573,48 @@
             ]
         };
 
-        // Hafızadaki bozuk verileri temizlemek için emniyet kontrolü
-        let menuData;
-        try {
-            const savedData = localStorage.getItem('bunfun_menu_data');
-            if (savedData) {
-                const parsed = JSON.parse(savedData);
-                // Eğer kayıtlı veri yeni yapıya (key alanına) uygun değilse sıfırla
-                if (parsed && parsed.categories && parsed.categories[0] && parsed.categories[0].key) {
-                    menuData = parsed;
-                } else {
-                    menuData = defaultMenuData;
-                    localStorage.setItem('bunfun_menu_data', JSON.stringify(defaultMenuData));
-                }
-            } else {
-                menuData = defaultMenuData;
+        // Akıllı Dil Çeviri / Uyarlama Sözlüğü
+        function translateDesc(desc, lang) {
+            if (lang === 'tr') return desc;
+            let translated = desc;
+            if (lang === 'en') {
+                translated = translated
+                    .replace(/Patates/g, "Fries")
+                    .replace(/patates/g, "fries")
+                    .replace(/Dana burger köftesi/g, "Beef burger patty")
+                    .replace(/dana köfte/g, "beef patty")
+                    .replace(/Çıtır tavuk/g, "Crispy chicken")
+                    .replace(/çıtır tavuk/g, "crispy chicken")
+                    .replace(/özel sos/g, "special sauce")
+                    .replace(/turşu/g, "pickles")
+                    .replace(/marul/g, "lettuce")
+                    .replace(/İçecek/g, "Beverage")
+                    .replace(/Ev yapımı limonata/g, "Homemade lemonade");
+            } else if (lang === 'ru') {
+                translated = translated
+                    .replace(/Patates/g, "Картофель фри")
+                    .replace(/patates/g, "картофель фри")
+                    .replace(/Dana burger köftesi/g, "Говяжья котлета для бургера")
+                    .replace(/dana köfte/g, "говяжья котлета")
+                    .replace(/Çıtır tavuk/g, "Хрустящая курица")
+                    .replace(/çıtır tavuk/g, "хрустящая курица")
+                    .replace(/özel sos/g, "специальный соус")
+                    .replace(/turşu/g, "соленые огурцы")
+                    .replace(/marul/g, "салат айсберг")
+                    .replace(/İçecek/g, "Напиток")
+                    .replace(/Ev yapımı limonata/g, "Домашний лимонад");
             }
-        } catch (e) {
-            menuData = defaultMenuData;
+            return translated;
         }
+
+        // Veri senkronizasyonu için Storage Dinleme
+        let menuData = JSON.parse(localStorage.getItem('bunfun_menu_data')) || defaultMenuData;
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'bunfun_menu_data' && e.newValue) {
+                menuData = JSON.parse(e.newValue);
+                renderCategories();
+            }
+        });
 
         let currentLang = 'tr';
         let currentCatIndex = 0;
@@ -654,11 +685,13 @@
                     pCard.style.opacity = '0.6';
                 }
 
+                const displayDesc = translateDesc(prod.desc, currentLang);
+
                 pCard.innerHTML = `
                     ${thumbHtml}
                     <div class="product-info">
                         <div class="product-name">${prod.name}</div>
-                        <div class="product-desc-preview">${prod.desc}</div>
+                        <div class="product-desc-preview">${displayDesc}</div>
                         <div class="product-price">${prod.price}</div>
                         ${stockBadge}
                     </div>
@@ -693,7 +726,7 @@
             }
 
             document.getElementById('detail-title').innerText = prod.name;
-            document.getElementById('detail-desc').innerText = prod.desc;
+            document.getElementById('detail-desc').innerText = translateDesc(prod.desc, currentLang);
             document.getElementById('detail-price').innerText = prod.price;
 
             goToPage('page-detail');
@@ -750,9 +783,12 @@
                             <input type="text" id="desc_${cIdx}_${pIdx}" value="${prod.desc}" placeholder="Açıklama">
                             <input type="text" id="price_${cIdx}_${pIdx}" class="price-input" value="${prod.price}" placeholder="Fiyat">
                         </div>
-                        <label class="admin-checkbox-label">
-                            <input type="checkbox" id="stock_${cIdx}_${pIdx}" ${isChecked}> Stokta Var (Kaldırılırsa tüktendi yazar)
-                        </label>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label class="admin-checkbox-label">
+                                <input type="checkbox" id="stock_${cIdx}_${pIdx}" ${isChecked}> Stokta Var
+                            </label>
+                            <button class="admin-btn admin-btn-danger" onclick="deleteProduct(${cIdx}, ${pIdx})">Ürünü Sil</button>
+                        </div>
                     `;
                     container.appendChild(row);
                 });
@@ -797,7 +833,16 @@
             document.getElementById('add-product-box').style.display = 'none';
 
             renderAdminPanel();
-            alert('Yeni ürün başarıyla eklendi!');
+            alert('Yeni ürün başarıyla eklendi ve tüm cihazlarda güncellendi!');
+        }
+
+        function deleteProduct(cIdx, pIdx) {
+            if (confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
+                menuData.categories[cIdx].products.splice(pIdx, 1);
+                localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
+                renderAdminPanel();
+                alert('Ürün silindi!');
+            }
         }
 
         function saveAdminChanges() {
@@ -816,7 +861,7 @@
             });
 
             localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
-            alert('Değişiklikler başarıyla kaydedildi ve sitede güncellendi!');
+            alert('Değişiklikler başarıyla kaydedildi ve anında tüm cihazlarda güncellendi!');
             goToPage('page-categories');
             renderCategories();
         }
