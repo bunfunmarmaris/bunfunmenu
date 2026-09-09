@@ -464,29 +464,17 @@
             tr: { 
                 backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ",
                 catNames: { "BURGERLER": "BURGERLER", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "SICAK SANDVİÇLER", "TOSTLAR": "TOSTLAR", "FUN BOWLLAR": "FUN BOWLLAR", "FUN MENÜLER": "FUN MENÜLER", "ATIŞTIRMALIKLAR": "ATIŞTIRMALIKLAR", "İÇECEKLER": "İÇECEKLER" },
-                productNames: {
-                    "Islak Hamburger": "Islak Hamburger",
-                    "Islak Cheeseburger": "Islak Cheeseburger",
-                    "Islak Lüksburger": "Islak Lüksburger"
-                }
+                productNames: { "Islak Hamburger": "Islak Hamburger", "Islak Cheeseburger": "Islak Cheeseburger", "Islak Lüksburger": "Islak Lüksburger" }
             },
             en: { 
                 backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT",
                 catNames: { "BURGERLER": "BURGERS", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "HOT SANDWICHES", "TOSTLAR": "TOASTS", "FUN BOWLLAR": "FUN BOWLS", "FUN MENÜLER": "FUN MENUS", "ATIŞTIRMALIKLAR": "SNACKS", "İÇECEKLER": "BEVERAGES" },
-                productNames: {
-                    "Islak Hamburger": "Wet Burger",
-                    "Islak Cheeseburger": "Wet Cheeseburger",
-                    "Islak Lüksburger": "Wet Luxury Burger"
-                }
+                productNames: { "Islak Hamburger": "Wet Burger", "Islak Cheeseburger": "Wet Cheeseburger", "Islak Lüksburger": "Wet Luxury Burger" }
             },
             ru: { 
                 backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО",
                 catNames: { "BURGERLER": "БУРГЕРЫ", "BAO BUN": "БУЛОЧКИ БАО", "SICAK SANDVİÇLER": "ГОРЯЧИЕ СЭНДВИЧИ", "TOSTLAR": "ТОСТЫ", "FUN BOWLLAR": "ФАН БОУЛЫ", "FUN MENÜLER": "ФАН МЕНЮ", "ATIŞTIRMALIKLAR": "ЗАКУСКИ", "İÇECEKLER": "НАПИТКИ" },
-                productNames: {
-                    "Islak Hamburger": "Влажный бургер",
-                    "Islak Cheeseburger": "Влажный чизбургер",
-                    "Islak Lüksburger": "Влажный премиум бургер"
-                }
+                productNames: { "Islak Hamburger": "Влажный бургер", "Islak Cheeseburger": "Влажный чизбургер", "Islak Lüksburger": "Влажный премиум бургер" }
             }
         };
 
@@ -594,7 +582,7 @@
             if (t.productNames && t.productNames[name]) {
                 return t.productNames[name];
             }
-            return name; // Özel eklenen yeni ürünler orijinal adıyla kalır
+            return name;
         }
 
         function translateDesc(desc, lang) {
@@ -608,6 +596,8 @@
                     .replace(/dana köfte/g, "beef patty")
                     .replace(/Çıtır tavuk/g, "Crispy chicken")
                     .replace(/çıtır tavuk/g, "crispy chicken")
+                    .replace(/çıtır soğan/g, "crispy onions")
+                    .replace(/Çıtır soğan/g, "Crispy onions")
                     .replace(/özel sos/g, "special sauce")
                     .replace(/turşu/g, "pickles")
                     .replace(/marul/g, "lettuce")
@@ -621,6 +611,8 @@
                     .replace(/dana köfte/g, "говяжья котлета")
                     .replace(/Çıtır tavuk/g, "Хрустящая курица")
                     .replace(/çıtır tavuk/g, "хрустящая курица")
+                    .replace(/çıtır soğan/g, "хрустящий лук")
+                    .replace(/Çıtır soğan/g, "Хрустящий лук")
                     .replace(/özel sos/g, "специальный соус")
                     .replace(/turşu/g, "соленые огурцы")
                     .replace(/marul/g, "салат айсберг")
@@ -630,7 +622,6 @@
             return translated;
         }
 
-        // Veri senkronizasyonu için Storage Dinleme (Cihazlar arası anlık güncelleme)
         let menuData = JSON.parse(localStorage.getItem('bunfun_menu_data')) || defaultMenuData;
         window.addEventListener('storage', (e) => {
             if (e.key === 'bunfun_menu_data' && e.newValue) {
@@ -857,7 +848,7 @@
             document.getElementById('add-product-box').style.display = 'none';
 
             renderAdminPanel();
-            alert('Yeni ürün başarıyla eklendi ve tüm cihazlarda güncellendi!');
+            alert('Yeni ürün başarıyla eklendi!');
         }
 
         function deleteProduct(cIdx, pIdx) {
@@ -885,7 +876,7 @@
             });
 
             localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
-            alert('Değişiklikler başarıyla kaydedildi ve anında tüm cihazlarda güncellendi!');
+            alert('Değişiklikler başarıyla kaydedildi!');
             goToPage('page-categories');
             renderCategories();
         }
