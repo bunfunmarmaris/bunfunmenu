@@ -436,18 +436,18 @@
             },
             en: { 
                 backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT",
-                catNames: { "BURGERLER": "BURGERS", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "HOT SANDWICHES", "TOSTLAR": "TOASTS", "FUN BOWLLAR": "FUN BOWLS", "FUN MENÜLER": "FUN MENUS", "ATIŞTIRMALIKLAR": "SNACKS", "İÇECEKLER": "BEVERAGES" },
+                catNames: { "BURGERLER": "Burgers", "BAO BUN": "Bao Buns", "SICAK SANDVİÇLER": "Hot Sandwiches", "TOSTLAR": "Toasts", "FUN BOWLLAR": "Fun Bowls", "FUN MENÜLER": "Fun Menus", "ATIŞTIRMALIKLAR": "Snacks", "İÇECEKLER": "Beverages" },
                 productNames: { "Islak Hamburger": "Wet Burger", "Islak Cheeseburger": "Wet Cheeseburger", "Islak Lüksburger": "Wet Luxury Burger" }
             },
             ru: { 
                 backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО",
-                catNames: { "BURGERLER": "БУРГЕРЫ", "BAO BUN": "БУЛОЧКИ БАО", "SICAK SANDVİÇLER": "ГОРЯЧИЕ СЭНДВИЧИ", "TOSTLAR": "ТОСТЫ", "FUN BOWLLAR": "ФАН БОУЛЫ", "FUN MENÜLER": "ФАН МЕНЮ", "ATIŞTIRMALIKLAR": "ЗАКУСКИ", "İÇECEKLER": "НАПИТКИ" },
+                catNames: { "BURGERLER": "Бургеры", "BAO BUN": "Булочки Бао", "SICAK SANDVİÇLER": "Горячие сэндвичи", "TOSTLAR": "Тосты", "FUN BOWLLAR": "Фан Боулы", "FUN MENÜLER": "Фан Меню", "ATIŞTIRMALIKLAR": "Закуски", "İÇECEKLER": "Напитки" },
                 productNames: { "Islak Hamburger": "Влажный бургер", "Islak Cheeseburger": "Влажный чизбургер", "Islak Lüksburger": "Влажный премиум бургер" }
             }
         };
 
         const defaultMenuData = {
-            version: "2026.1", // Bu versiyon değiştiğinde tüm telefonların önbelleği zorla güncellenir!
+            version: "2026.2",
             categories: [
                 {
                     key: "BURGERLER",
@@ -545,13 +545,12 @@
             ]
         };
 
-        // Otomatik Güncelleme Mekanizması: Yeni sürüm algılandığında eski önbelleği ezer
+        // Versiyon kontrolü ile önbelleği otomatik güncelle
         let menuData;
         const localData = localStorage.getItem('bunfun_menu_data');
         if (localData) {
             try {
                 const parsed = JSON.parse(localData);
-                // Eğer versiyon tutuyorsa hafızadakini al, tutmuyorsa güncel default veriyi baz al
                 if (parsed.version === defaultMenuData.version) {
                     menuData = parsed;
                 } else {
@@ -566,7 +565,6 @@
             localStorage.setItem('bunfun_menu_data', JSON.stringify(defaultMenuData));
         }
 
-        // Başka cihazda fiyat/stok değiştiğinde anında ekrana yansıt
         window.addEventListener('storage', (e) => {
             if (e.key === 'bunfun_menu_data' && e.newValue) {
                 menuData = JSON.parse(e.newValue);
