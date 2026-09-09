@@ -46,14 +46,14 @@
         }
         
         .page {
-            display: none;
+            display: none !important;
         }
         .page.active {
-            display: block;
+            display: block !important;
         }
 
         #page-language.active {
-            display: flex;
+            display: flex !important;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -565,7 +565,26 @@
             ]
         };
 
-        let menuData = JSON.parse(localStorage.getItem('bunfun_menu_data')) || defaultMenuData;
+        // Hafızadaki bozuk verileri temizlemek için emniyet kontrolü
+        let menuData;
+        try {
+            const savedData = localStorage.getItem('bunfun_menu_data');
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                // Eğer kayıtlı veri yeni yapıya (key alanına) uygun değilse sıfırla
+                if (parsed && parsed.categories && parsed.categories[0] && parsed.categories[0].key) {
+                    menuData = parsed;
+                } else {
+                    menuData = defaultMenuData;
+                    localStorage.setItem('bunfun_menu_data', JSON.stringify(defaultMenuData));
+                }
+            } else {
+                menuData = defaultMenuData;
+            }
+        } catch (e) {
+            menuData = defaultMenuData;
+        }
+
         let currentLang = 'tr';
         let currentCatIndex = 0;
 
