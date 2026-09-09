@@ -463,15 +463,30 @@
         const uiTexts = {
             tr: { 
                 backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ",
-                catNames: { "BURGERLER": "BURGERLER", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "SICAK SANDVİÇLER", "TOSTLAR": "TOSTLAR", "FUN BOWLLAR": "FUN BOWLLAR", "FUN MENÜLER": "FUN MENÜLER", "ATIŞTIRMALIKLAR": "ATIŞTIRMALIKLAR", "İÇECEKLER": "İÇECEKLER" }
+                catNames: { "BURGERLER": "BURGERLER", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "SICAK SANDVİÇLER", "TOSTLAR": "TOSTLAR", "FUN BOWLLAR": "FUN BOWLLAR", "FUN MENÜLER": "FUN MENÜLER", "ATIŞTIRMALIKLAR": "ATIŞTIRMALIKLAR", "İÇECEKLER": "İÇECEKLER" },
+                productNames: {
+                    "Islak Hamburger": "Islak Hamburger",
+                    "Islak Cheeseburger": "Islak Cheeseburger",
+                    "Islak Lüksburger": "Islak Lüksburger"
+                }
             },
             en: { 
                 backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT",
-                catNames: { "BURGERLER": "BURGERS", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "HOT SANDWICHES", "TOSTLAR": "TOASTS", "FUN BOWLLAR": "FUN BOWLS", "FUN MENÜLER": "FUN MENUS", "ATIŞTIRMALIKLAR": "SNACKS", "İÇECEKLER": "BEVERAGES" }
+                catNames: { "BURGERLER": "BURGERS", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "HOT SANDWICHES", "TOSTLAR": "TOASTS", "FUN BOWLLAR": "FUN BOWLS", "FUN MENÜLER": "FUN MENUS", "ATIŞTIRMALIKLAR": "SNACKS", "İÇECEKLER": "BEVERAGES" },
+                productNames: {
+                    "Islak Hamburger": "Wet Burger",
+                    "Islak Cheeseburger": "Wet Cheeseburger",
+                    "Islak Lüksburger": "Wet Luxury Burger"
+                }
             },
             ru: { 
                 backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО",
-                catNames: { "BURGERLER": "БУРГЕРЫ", "BAO BUN": "БУЛОЧКИ БАО", "SICAK SANDVİÇLER": "ГОРЯЧИЕ СЭНДВИЧИ", "TOSTLAR": "ТОСТЫ", "FUN BOWLLAR": "ФАН БОУЛЫ", "FUN MENÜLER": "ФАН МЕНЮ", "ATIŞTIRMALIKLAR": "ЗАКУСКИ", "İÇECEKLER": "НАПИТКИ" }
+                catNames: { "BURGERLER": "БУРГЕРЫ", "BAO BUN": "БУЛОЧКИ БАО", "SICAK SANDVİÇLER": "ГОРЯЧИЕ СЭНДВИЧИ", "TOSTLAR": "ТОСТЫ", "FUN BOWLLAR": "ФАН БОУЛЫ", "FUN MENÜLER": "ФАН МЕНЮ", "ATIŞTIRMALIKLAR": "ЗАКУСКИ", "İÇECEKLER": "НАПИТКИ" },
+                productNames: {
+                    "Islak Hamburger": "Влажный бургер",
+                    "Islak Cheeseburger": "Влажный чизбургер",
+                    "Islak Lüksburger": "Влажный премиум бургер"
+                }
             }
         };
 
@@ -574,6 +589,14 @@
         };
 
         // Akıllı Dil Çeviri / Uyarlama Sözlüğü
+        function getProductName(name, lang) {
+            const t = uiTexts[lang];
+            if (t.productNames && t.productNames[name]) {
+                return t.productNames[name];
+            }
+            return name; // Özel eklenen yeni ürünler orijinal adıyla kalır
+        }
+
         function translateDesc(desc, lang) {
             if (lang === 'tr') return desc;
             let translated = desc;
@@ -607,7 +630,7 @@
             return translated;
         }
 
-        // Veri senkronizasyonu için Storage Dinleme
+        // Veri senkronizasyonu için Storage Dinleme (Cihazlar arası anlık güncelleme)
         let menuData = JSON.parse(localStorage.getItem('bunfun_menu_data')) || defaultMenuData;
         window.addEventListener('storage', (e) => {
             if (e.key === 'bunfun_menu_data' && e.newValue) {
@@ -685,12 +708,13 @@
                     pCard.style.opacity = '0.6';
                 }
 
+                const displayName = getProductName(prod.name, currentLang);
                 const displayDesc = translateDesc(prod.desc, currentLang);
 
                 pCard.innerHTML = `
                     ${thumbHtml}
                     <div class="product-info">
-                        <div class="product-name">${prod.name}</div>
+                        <div class="product-name">${displayName}</div>
                         <div class="product-desc-preview">${displayDesc}</div>
                         <div class="product-price">${prod.price}</div>
                         ${stockBadge}
@@ -725,7 +749,7 @@
                 containerEl.appendChild(placeholderEl);
             }
 
-            document.getElementById('detail-title').innerText = prod.name;
+            document.getElementById('detail-title').innerText = getProductName(prod.name, currentLang);
             document.getElementById('detail-desc').innerText = translateDesc(prod.desc, currentLang);
             document.getElementById('detail-price').innerText = prod.price;
 
