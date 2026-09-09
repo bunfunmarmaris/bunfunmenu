@@ -453,15 +453,24 @@
 
     <script>
         const uiTexts = {
-            tr: { backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ" },
-            en: { backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT" },
-            ru: { backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО" }
+            tr: { 
+                backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ",
+                catNames: { "BURGERLER": "BURGERLER", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "SICAK SANDVİÇLER", "TOSTLAR": "TOSTLAR", "FUN BOWLLAR": "FUN BOWLLAR", "FUN MENÜLER": "FUN MENÜLER", "ATIŞTIRMALIKLAR": "ATIŞTIRMALIKLAR", "İÇECEKLER": "İÇECEKLER" }
+            },
+            en: { 
+                backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT",
+                catNames: { "BURGERLER": "BURGERS", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "HOT SANDWICHES", "TOSTLAR": "TOASTS", "FUN BOWLLAR": "FUN BOWLS", "FUN MENÜLER": "FUN MENUS", "ATIŞTIRMALIKLAR": "SNACKS", "İÇECEKLER": "BEVERAGES" }
+            },
+            ru: { 
+                backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО",
+                catNames: { "BURGERLER": "БУРГЕРЫ", "BAO BUN": "БУЛОЧКИ БАО", "SICAK SANDVİÇLER": "ГОРЯЧИЕ СЭНДВИЧИ", "TOSTLAR": "ТОСТЫ", "FUN BOWLLAR": "ФАН БОУЛЫ", "FUN MENÜLER": "ФАН МЕНЮ", "ATIŞTIRMALIKLAR": "ЗАКУСКИ", "İÇECEKLER": "НАПИТКИ" }
+            }
         };
 
         const defaultMenuData = {
             categories: [
                 {
-                    name: "BURGERLER",
+                    key: "BURGERLER",
                     products: [
                         { id: "b1", name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg", stock: true },
                         { id: "b2", name: "Islak Cheeseburger", desc: "Dana burger köftesi, cheddar, özel sos.", price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg", stock: true },
@@ -475,7 +484,7 @@
                     ]
                 },
                 {
-                    name: "BAO BUN",
+                    key: "BAO BUN",
                     products: [
                         { id: "ba1", name: "Bbq Bun", desc: "120 gr. dana köfte, ızgara soğan, cheddar, turşu, bbq sos + Patates", price: "510 TL", image: "", stock: true },
                         { id: "ba2", name: "Cheesy Smash Bun", desc: "2x60 gr. smash dana köfte, cheddar, çıtır soğan, özel burger sos + Patates", price: "510 TL", image: "", stock: true },
@@ -486,7 +495,7 @@
                     ]
                 },
                 {
-                    name: "SICAK SANDVİÇLER",
+                    key: "SICAK SANDVİÇLER",
                     products: [
                         { id: "s1", name: "Sosisli", desc: "Özel soslu sosis, turşu, ketçap, mayonez.", price: "150 TL", image: "images/sosisli.jpg.jpeg", stock: true },
                         { id: "s2", name: "Goralı", desc: "Özel soslu sosis, turşu, Amerikan Salatası, ketçap, mayonez.", price: "170 TL", image: "images/gorali.jpg.jpeg", stock: true },
@@ -498,7 +507,7 @@
                     ]
                 },
                 {
-                    name: "TOSTLAR",
+                    key: "TOSTLAR",
                     products: [
                         { id: "t1", name: "Kaşarlı Tost", desc: "Kaşar peyniri.", price: "200 TL", image: "images/kasarlitost.jpg.jpeg", stock: true },
                         { id: "t2", name: "Karışık Tost", desc: "Kaşar peyniri, kasap sucuk.", price: "250 TL", image: "images/karisiktost.jpg.jpeg", stock: true },
@@ -508,7 +517,7 @@
                     ]
                 },
                 {
-                    name: "FUN BOWLLAR",
+                    key: "FUN BOWLLAR",
                     products: [
                         { id: "f1", name: "Pink Fun Bowl", desc: "Patates üzerine: mini hamburger şişleri, özel B&F pink fun sos.", price: "490 TL", image: "", stock: true },
                         { id: "f2", name: "Green Mozz Fun Bowl", desc: "Patates üzerine: mozzarella şişleri, avokado mayo sos.", price: "410 TL", image: "", stock: true },
@@ -518,7 +527,7 @@
                     ]
                 },
                 {
-                    name: "FUN MENÜLER",
+                    key: "FUN MENÜLER",
                     products: [
                         { id: "m1", name: "2'li Islak Hamburger Menü", desc: "2 Islak Hamburger + Patates + İçecek", price: "510 TL", image: "", stock: true },
                         { id: "m2", name: "2'li Sosisli Menü", desc: "2 Sosisli + Patates + İçecek", price: "510 TL", image: "", stock: true },
@@ -527,7 +536,7 @@
                     ]
                 },
                 {
-                    name: "ATIŞTIRMALIKLAR",
+                    key: "ATIŞTIRMALIKLAR",
                     products: [
                         { id: "a1", name: "Patates Kızartması", desc: "Porsiyon patates kızartması", price: "200 TL", image: "", stock: true },
                         { id: "a2", name: "Soğan Halkası 6'lı", desc: "6 adet soğan halkası", price: "160 TL", image: "", stock: true },
@@ -538,7 +547,7 @@
                     ]
                 },
                 {
-                    name: "İÇECEKLER",
+                    key: "İÇECEKLER",
                     products: [
                         { id: "i1", name: "Su", desc: "330 ml", price: "40 TL", image: "", stock: true },
                         { id: "i2", name: "Ayran", desc: "200 ml", price: "70 TL", image: "", stock: true },
@@ -588,11 +597,13 @@
         function renderCategories() {
             const container = document.getElementById('category-container');
             container.innerHTML = '';
+            const t = uiTexts[currentLang];
 
             menuData.categories.forEach((cat, index) => {
                 const card = document.createElement('div');
                 card.className = 'category-card';
-                card.innerHTML = `<span>${cat.name}</span> <span>→</span>`;
+                const displayName = t.catNames[cat.key] || cat.key;
+                card.innerHTML = `<span>${displayName}</span> <span>→</span>`;
                 card.onclick = () => openCategory(index);
                 container.appendChild(card);
             });
@@ -602,7 +613,7 @@
             currentCatIndex = catIndex;
             const cat = menuData.categories[catIndex];
             const t = uiTexts[currentLang];
-            document.getElementById('product-section-title').innerText = cat.name;
+            document.getElementById('product-section-title').innerText = t.catNames[cat.key] || cat.key;
 
             const container = document.getElementById('product-container');
             container.innerHTML = '';
@@ -698,14 +709,14 @@
             menuData.categories.forEach((cat, idx) => {
                 const opt = document.createElement('option');
                 opt.value = idx;
-                opt.innerText = cat.name;
+                opt.innerText = cat.key;
                 catSelect.appendChild(opt);
             });
 
             menuData.categories.forEach((cat, cIdx) => {
                 const catHeader = document.createElement('h3');
                 catHeader.style.cssText = "font-size: 16px; color: #c73729; margin: 15px 0 8px 0; border-bottom: 2px solid #c73729; padding-bottom: 4px;";
-                catHeader.innerText = cat.name;
+                catHeader.innerText = cat.key;
                 container.appendChild(catHeader);
 
                 cat.products.forEach((prod, pIdx) => {
