@@ -46,18 +46,18 @@
         }
         
         .page {
-            display: none !important;
+            display: none;
         }
         .page.active {
-            display: block !important;
+            display: block;
         }
 
         #page-language.active {
-            display: flex !important;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 60vh;
+            min-height: 50vh;
         }
 
         .lang-buttons {
@@ -452,7 +452,6 @@
     </div>
 
     <script>
-        // Dil sözlükleri ve Varsayılan Menü Verileri
         const uiTexts = {
             tr: { backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ" },
             en: { backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT" },
@@ -557,9 +556,7 @@
             ]
         };
 
-        // Hafızadan güncel verileri çek veya varsayılanı kullan
         let menuData = JSON.parse(localStorage.getItem('bunfun_menu_data')) || defaultMenuData;
-
         let currentLang = 'tr';
         let currentCatIndex = 0;
 
@@ -672,7 +669,6 @@
             goToPage('page-detail');
         }
 
-        // --- YÖNETİCİ PANELİ FONKSİYONLARI ---
         function handleAdminLogin() {
             const user = document.getElementById('admin-user').value.trim();
             const pass = document.getElementById('admin-pass').value.trim();
@@ -697,7 +693,6 @@
             const container = document.getElementById('admin-products-container');
             container.innerHTML = '';
 
-            // Kategori Seçim Listesini Doldur (Yeni Ürün Ekleme için)
             const catSelect = document.getElementById('new-prod-cat');
             catSelect.innerHTML = '';
             menuData.categories.forEach((cat, idx) => {
@@ -759,14 +754,13 @@
                 name: name,
                 desc: desc || "Özel lezzet.",
                 price: price,
-                image: "", // Görsel boş kalırsa otomatik "Görseller Çok Yakında" yazar
+                image: "",
                 stock: true
             };
 
             menuData.categories[catIdx].products.push(newProduct);
             localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
 
-            // Formu temizle ve paneli tazele
             document.getElementById('new-prod-name').value = '';
             document.getElementById('new-prod-desc').value = '';
             document.getElementById('new-prod-price').value = '';
@@ -791,7 +785,6 @@
                 });
             });
 
-            // Tarayıcı hafızasına kalıcı olarak kaydet
             localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
             alert('Değişiklikler başarıyla kaydedildi ve sitede güncellendi!');
             goToPage('page-categories');
