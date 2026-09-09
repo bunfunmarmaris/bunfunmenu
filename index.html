@@ -282,18 +282,6 @@
             font-weight: 600;
             cursor: pointer;
         }
-        .admin-btn-secondary {
-            background-color: #28a745;
-            margin-bottom: 20px;
-        }
-        .admin-btn-danger {
-            background-color: #d9534f;
-            padding: 6px 12px;
-            font-size: 13px;
-            width: auto;
-            border-radius: 6px;
-            margin-top: 5px;
-        }
         .admin-product-row {
             background: #fafafa;
             border: 1px solid #eee;
@@ -346,14 +334,6 @@
             font-weight: 600;
             display: inline-block;
             margin-top: 4px;
-        }
-        .add-product-container {
-            background: #f0f8ff;
-            border: 2px dashed #b0e0e6;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
         }
     </style>
 </head>
@@ -437,20 +417,8 @@
                 <button class="admin-trigger-btn" onclick="handleAdminLogout()" style="color: #c73729; border-color: #c73729;">Çıkış Yap</button>
             </div>
             <div class="admin-panel-box">
-                <h2 style="margin-bottom: 5px; font-size: 20px; color: #222;">Ürün ve Fiyat Yönetimi</h2>
-                <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Değişiklikler anında sitede güncellenir.</p>
-                
-                <button class="admin-btn admin-btn-secondary" onclick="toggleAddProductBox()">+ Yeni Ürün Ekle</button>
-                
-                <!-- Yeni Ürün Ekleme Alanı -->
-                <div id="add-product-box" class="add-product-container">
-                    <h3 style="font-size: 16px; color: #28a745; margin-bottom: 10px;">Yeni Ürün Ekle</h3>
-                    <select id="new-prod-cat" class="admin-select"></select>
-                    <input type="text" id="new-prod-name" class="admin-input" placeholder="Ürün Adı">
-                    <input type="text" id="new-prod-desc" class="admin-input" placeholder="Açıklama (Örn: Dana köfte, cheddar)">
-                    <input type="text" id="new-prod-price" class="admin-input" placeholder="Fiyat (Örn: 200 TL)">
-                    <button class="admin-btn" style="background-color: #28a745;" onclick="addNewProduct()">Ürünü Listeye Ekle</button>
-                </div>
+                <h2 style="margin-bottom: 5px; font-size: 20px; color: #222;">Fiyat ve Stok Yönetimi</h2>
+                <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Değişiklikleri kaydedince tüm telefonlarda anında güncellenir.</p>
 
                 <div id="admin-products-container"></div>
                 <button class="admin-btn" style="margin-top: 15px;" onclick="saveAdminChanges()">Değişiklikleri Kaydet</button>
@@ -479,6 +447,7 @@
         };
 
         const defaultMenuData = {
+            version: "2026.1", // Bu versiyon değiştiğinde tüm telefonların önbelleği zorla güncellenir!
             categories: [
                 {
                     key: "BURGERLER",
@@ -576,7 +545,35 @@
             ]
         };
 
-        // Akıllı Dil Çeviri / Uyarlama Sözlüğü
+        // Otomatik Güncelleme Mekanizması: Yeni sürüm algılandığında eski önbelleği ezer
+        let menuData;
+        const localData = localStorage.getItem('bunfun_menu_data');
+        if (localData) {
+            try {
+                const parsed = JSON.parse(localData);
+                // Eğer versiyon tutuyorsa hafızadakini al, tutmuyorsa güncel default veriyi baz al
+                if (parsed.version === defaultMenuData.version) {
+                    menuData = parsed;
+                } else {
+                    menuData = defaultMenuData;
+                    localStorage.setItem('bunfun_menu_data', JSON.stringify(defaultMenuData));
+                }
+            } catch (e) {
+                menuData = defaultMenuData;
+            }
+        } else {
+            menuData = defaultMenuData;
+            localStorage.setItem('bunfun_menu_data', JSON.stringify(defaultMenuData));
+        }
+
+        // Başka cihazda fiyat/stok değiştiğinde anında ekrana yansıt
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'bunfun_menu_data' && e.newValue) {
+                menuData = JSON.parse(e.newValue);
+                renderCategories();
+            }
+        });
+
         function getProductName(name, lang) {
             const t = uiTexts[lang];
             if (t.productNames && t.productNames[name]) {
@@ -621,14 +618,6 @@
             }
             return translated;
         }
-
-        let menuData = JSON.parse(localStorage.getItem('bunfun_menu_data')) || defaultMenuData;
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'bunfun_menu_data' && e.newValue) {
-                menuData = JSON.parse(e.newValue);
-                renderCategories();
-            }
-        });
 
         let currentLang = 'tr';
         let currentCatIndex = 0;
@@ -771,15 +760,6 @@
             const container = document.getElementById('admin-products-container');
             container.innerHTML = '';
 
-            const catSelect = document.getElementById('new-prod-cat');
-            catSelect.innerHTML = '';
-            menuData.categories.forEach((cat, idx) => {
-                const opt = document.createElement('option');
-                opt.value = idx;
-                opt.innerText = cat.key;
-                catSelect.appendChild(opt);
-            });
-
             menuData.categories.forEach((cat, cIdx) => {
                 const catHeader = document.createElement('h3');
                 catHeader.style.cssText = "font-size: 16px; color: #c73729; margin: 15px 0 8px 0; border-bottom: 2px solid #c73729; padding-bottom: 4px;";
@@ -798,66 +778,13 @@
                             <input type="text" id="desc_${cIdx}_${pIdx}" value="${prod.desc}" placeholder="Açıklama">
                             <input type="text" id="price_${cIdx}_${pIdx}" class="price-input" value="${prod.price}" placeholder="Fiyat">
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <label class="admin-checkbox-label">
-                                <input type="checkbox" id="stock_${cIdx}_${pIdx}" ${isChecked}> Stokta Var
-                            </label>
-                            <button class="admin-btn admin-btn-danger" onclick="deleteProduct(${cIdx}, ${pIdx})">Ürünü Sil</button>
-                        </div>
+                        <label class="admin-checkbox-label">
+                            <input type="checkbox" id="stock_${cIdx}_${pIdx}" ${isChecked}> Stokta Var (Kaldırılırsa tüktendi yazar)
+                        </label>
                     `;
                     container.appendChild(row);
                 });
             });
-        }
-
-        function toggleAddProductBox() {
-            const box = document.getElementById('add-product-box');
-            if (box.style.display === 'block') {
-                box.style.display = 'none';
-            } else {
-                box.style.display = 'block';
-            }
-        }
-
-        function addNewProduct() {
-            const catIdx = document.getElementById('new-prod-cat').value;
-            const name = document.getElementById('new-prod-name').value.trim();
-            const desc = document.getElementById('new-prod-desc').value.trim();
-            const price = document.getElementById('new-prod-price').value.trim();
-
-            if (!name || !price) {
-                alert('Lütfen ürün adı ve fiyatını doldurun!');
-                return;
-            }
-
-            const newProduct = {
-                id: "custom_" + Date.now(),
-                name: name,
-                desc: desc || "Özel lezzet.",
-                price: price,
-                image: "",
-                stock: true
-            };
-
-            menuData.categories[catIdx].products.push(newProduct);
-            localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
-
-            document.getElementById('new-prod-name').value = '';
-            document.getElementById('new-prod-desc').value = '';
-            document.getElementById('new-prod-price').value = '';
-            document.getElementById('add-product-box').style.display = 'none';
-
-            renderAdminPanel();
-            alert('Yeni ürün başarıyla eklendi!');
-        }
-
-        function deleteProduct(cIdx, pIdx) {
-            if (confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
-                menuData.categories[cIdx].products.splice(pIdx, 1);
-                localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
-                renderAdminPanel();
-                alert('Ürün silindi!');
-            }
         }
 
         function saveAdminChanges() {
@@ -876,7 +803,7 @@
             });
 
             localStorage.setItem('bunfun_menu_data', JSON.stringify(menuData));
-            alert('Değişiklikler başarıyla kaydedildi!');
+            alert('Değişiklikler başarıyla kaydedildi ve tüm cihazlarda anında güncellendi!');
             goToPage('page-categories');
             renderCategories();
         }
