@@ -262,7 +262,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        .admin-input, .admin-select {
+        .admin-input {
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
@@ -428,124 +428,332 @@
     </div>
 
     <script>
+        // Arayüz metinleri (Geri dön tuşları, başlıklar vb.)
         const uiTexts = {
-            tr: { 
-                backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ",
-                catNames: { "BURGERLER": "BURGERLER", "BAO BUN": "BAO BUN", "SICAK SANDVİÇLER": "SICAK SANDVİÇLER", "TOSTLAR": "TOSTLAR", "FUN BOWLLAR": "FUN BOWLLAR", "FUN MENÜLER": "FUN MENÜLER", "ATIŞTIRMALIKLAR": "ATIŞTIRMALIKLAR", "İÇECEKLER": "İÇECEKLER" },
-                productNames: { "Islak Hamburger": "Islak Hamburger", "Islak Cheeseburger": "Islak Cheeseburger", "Islak Lüksburger": "Islak Lüksburger" }
-            },
-            en: { 
-                backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT",
-                catNames: { "BURGERLER": "Burgers", "BAO BUN": "Bao Buns", "SICAK SANDVİÇLER": "Hot Sandwiches", "TOSTLAR": "Toasts", "FUN BOWLLAR": "Fun Bowls", "FUN MENÜLER": "Fun Menus", "ATIŞTIRMALIKLAR": "Snacks", "İÇECEKLER": "Beverages" },
-                productNames: { "Islak Hamburger": "Wet Burger", "Islak Cheeseburger": "Wet Cheeseburger", "Islak Lüksburger": "Wet Luxury Burger" }
-            },
-            ru: { 
-                backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО",
-                catNames: { "BURGERLER": "Бургеры", "BAO BUN": "Булочки Бао", "SICAK SANDVİÇLER": "Горячие сэндвичи", "TOSTLAR": "Тосты", "FUN BOWLLAR": "Фан Боулы", "FUN MENÜLER": "Фан Меню", "ATIŞTIRMALIKLAR": "Закуски", "İÇECEKLER": "Напитки" },
-                productNames: { "Islak Hamburger": "Влажный бургер", "Islak Cheeseburger": "Влажный чизбургер", "Islak Lüksburger": "Влажный премиум бургер" }
-            }
+            tr: { backLang: "Dil Seçimi", backCat: "Kategoriler", backProd: "Ürünlere Dön", catTitle: "Kategoriler", soonText: "Görseller Çok Yakında", outOfStockText: "TÜKENDİ" },
+            en: { backLang: "Language", backCat: "Categories", backProd: "Back to Products", catTitle: "Categories", soonText: "Images Coming Soon", outOfStockText: "SOLD OUT" },
+            ru: { backLang: "Язык", backCat: "Категории", backProd: "Назад к продуктам", catTitle: "Категории", soonText: "Фото скоро", outOfStockText: "РАСПРОДАНО" }
         };
 
+        // Google Sheets / Tablo mantığıyla hazırlanan çok dilli tam menü veri tabanı
         const defaultMenuData = {
-            version: "2026.2",
+            version: "2026.3",
             categories: [
                 {
                     key: "BURGERLER",
+                    name: { tr: "BURGERLER", en: "BURGERS", ru: "БУРГЕРЫ" },
                     products: [
-                        { id: "b1", name: "Islak Hamburger", desc: "Dana burger köftesi, özel sos.", price: "150 TL", image: "images/islakhamburger.jpg.jpeg", stock: true },
-                        { id: "b2", name: "Islak Cheeseburger", desc: "Dana burger köftesi, cheddar, özel sos.", price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg", stock: true },
-                        { id: "b3", name: "Islak Lüksburger", desc: "Dana burger köftesi, Amerikan Salatası, özel sos.", price: "170 TL", image: "images/islakluksburger.jpg.jpeg", stock: true },
-                        { id: "b4", name: "Fun Smash Burger", desc: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", price: "560 TL", image: "images/funsmashburger.jpg.jpeg", stock: true },
-                        { id: "b5", name: "Heat Fun Burger", desc: "2x60 gr. smash dana köfte, cheddar, ızgara soğan, sriracha sos + Patates", price: "550 TL", image: "images/heatfunburger.jpg.jpeg", stock: true },
-                        { id: "b6", name: "Bun&Fun Burger", desc: "120 gr. dana köfte, dana füme, cheddar, çıtır soğan, turşu, marul, garlic sos + Patates", price: "650 TL", image: "images/bunfunburger.jpg.jpeg", stock: true },
-                        { id: "b7", name: "Chicken Fun Burger", desc: "Çıtır tavuk, marul, turşu, ranch sos + Patates", price: "450 TL", image: "images/chickenfunburger.jpg.jpeg", stock: true },
-                        { id: "b8", name: "BBQ Chicken Fun Burger", desc: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg", stock: true },
-                        { id: "b9", name: "Double Curry Fun Burger", desc: "Çift kat çıtır tavuk, çift cheddar, marul, turşu, özel B&F köri sos + Patates.", price: "480 TL", image: "", stock: true }
+                        { 
+                            id: "b1", 
+                            name: { tr: "Islak Hamburger", en: "Wet Burger", ru: "Влажный бургер" }, 
+                            desc: { tr: "Dana burger köftesi, özel sos.", en: "Beef burger patty, special sauce.", ru: "Говяжья котлета, специальный соус." }, 
+                            price: "150 TL", image: "images/islakhamburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b2", 
+                            name: { tr: "Islak Cheeseburger", en: "Wet Cheeseburger", ru: "Влажный чизбургер" }, 
+                            desc: { tr: "Dana burger köftesi, cheddar, özel sos.", en: "Beef burger patty, cheddar, special sauce.", ru: "Говяжья котлета, чеддер, специальный соус." }, 
+                            price: "170 TL", image: "images/islakcheeseburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b3", 
+                            name: { tr: "Islak Lüksburger", en: "Wet Luxury Burger", ru: "Влажный премиум бургер" }, 
+                            desc: { tr: "Dana burger köftesi, Amerikan Salatası, özel sos.", en: "Beef burger patty, American salad, special sauce.", ru: "Говяжья котлета, американский салат, специальный соус." }, 
+                            price: "170 TL", image: "images/islakluksburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b4", 
+                            name: { tr: "Fun Smash Burger", en: "Fun Smash Burger", ru: "Фан Смеш Бургер" }, 
+                            desc: { tr: "2x 60 gr. smash dana köfte, cheddar, çıtır soğan, turşu, özel burger sos + Patates", en: "2x 60g smash beef patty, cheddar, crispy onions, pickles, special burger sauce + Fries", ru: "2х 60г говяжья котлета смеш, чеддер, хрустящий лук, соленые огурцы, фирменный соус + Картофель фри" }, 
+                            price: "560 TL", image: "images/funsmashburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b5", 
+                            name: { tr: "Heat Fun Burger", en: "Heat Fun Burger", ru: "Хит Фан Бургер" }, 
+                            desc: { tr: "2x60 gr. smash dana köfte, cheddar, ızgara soğan, sriracha sos + Patates", en: "2x60g smash beef patty, cheddar, grilled onions, sriracha sauce + Fries", ru: "2х 60г говяжья котлета смеш, чеддер, жареный лук, соус шрирача + Картофель фри" }, 
+                            price: "550 TL", image: "images/heatfunburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b6", 
+                            name: { tr: "Bun&Fun Burger", en: "Bun&Fun Burger", ru: "Бан энд Фан Бургер" }, 
+                            desc: { tr: "120 gr. dana köfte, dana füme, cheddar, çıtır soğan, turşu, marul, garlic sos + Patates", en: "120g beef patty, smoked beef, cheddar, crispy onions, pickles, lettuce, garlic sauce + Fries", ru: "120г говяжья котлета, копченая говядина, чеддер, хрустящий лук, соленья, салат, чесночный соус + Картофель фри" }, 
+                            price: "650 TL", image: "images/bunfunburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b7", 
+                            name: { tr: "Chicken Fun Burger", en: "Chicken Fun Burger", ru: "Чикен Фан Бургер" }, 
+                            desc: { tr: "Çıtır tavuk, marul, turşu, ranch sos + Patates", en: "Crispy chicken, lettuce, pickles, ranch sauce + Fries", ru: "Хрустящая курица, салат, соленые огурцы, соус ранч + Картофель фри" }, 
+                            price: "450 TL", image: "images/chickenfunburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b8", 
+                            name: { tr: "BBQ Chicken Fun Burger", en: "BBQ Chicken Fun Burger", ru: "Барбекю Чикен Фан Бургер" }, 
+                            desc: { tr: "Çıtır tavuk, ızgara soğan, marul, barbekü sos + Patates", en: "Crispy chicken, grilled onions, lettuce, BBQ sauce + Fries", ru: "Хрустящая курица, жареный лук, салат, соус барбекю + Картофель фри" }, 
+                            price: "480 TL", image: "images/bbqchickenfunburger.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "b9", 
+                            name: { tr: "Double Curry Fun Burger", en: "Double Curry Fun Burger", ru: "Двойной Карри Фан Бургер" }, 
+                            desc: { tr: "Çift kat çıtır tavuk, çift cheddar, marul, turşu, özel B&F köri sos + Patates.", en: "Double crispy chicken, double cheddar, lettuce, pickles, special B&F curry sauce + Fries.", ru: "Двойная хрустящая курица, двойной чеддер, салат, соленья, фирменный соус карри + Картофель фри." }, 
+                            price: "480 TL", image: "", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "BAO BUN",
+                    name: { tr: "BAO BUN", en: "BAO BUNS", ru: "БУЛОЧКИ БАО" },
                     products: [
-                        { id: "ba1", name: "Bbq Bun", desc: "120 gr. dana köfte, ızgara soğan, cheddar, turşu, bbq sos + Patates", price: "510 TL", image: "", stock: true },
-                        { id: "ba2", name: "Cheesy Smash Bun", desc: "2x60 gr. smash dana köfte, cheddar, çıtır soğan, özel burger sos + Patates", price: "510 TL", image: "", stock: true },
-                        { id: "ba3", name: "Street Dog Bun", desc: "Jülyen sosis, Amerikan salatası, ketçap, mayonez, hardal + Patates", price: "430 TL", image: "", stock: true },
-                        { id: "ba4", name: "Pink Bun", desc: "Çıtır tavuk, lahana salatası, pink mayo, çörek otu + Patates", price: "440 TL", image: "", stock: true },
-                        { id: "ba5", name: "Honey Bun", desc: "Çıtır tavuk, marul, cheddar, ballı hardal sos + Patates", price: "450 TL", image: "", stock: true },
-                        { id: "ba6", name: "Green Bun", desc: "Falafel topları, avokado sos, cheddar, lahana salatası + Patates", price: "440 TL", image: "", stock: true }
+                        { 
+                            id: "ba1", 
+                            name: { tr: "Bbq Bun", en: "BBQ Bun", ru: "Барбекю Бан" }, 
+                            desc: { tr: "120 gr. dana köfte, ızgara soğan, cheddar, turşu, bbq sos + Patates", en: "120g beef patty, grilled onions, cheddar, pickles, BBQ sauce + Fries", ru: "120г говяжья котлета, жареный лук, чеддер, соленья, соус барбекю + Картофель фри" }, 
+                            price: "510 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "ba2", 
+                            name: { tr: "Cheesy Smash Bun", en: "Cheesy Smash Bun", ru: "Сырный Смеш Бан" }, 
+                            desc: { tr: "2x60 gr. smash dana köfte, cheddar, çıtır soğan, özel burger sos + Patates", en: "2x60g smash beef patty, cheddar, crispy onions, special burger sauce + Fries", ru: "2х60г говяжья котлета смеш, чеддер, хрустящий лук, фирменный соус + Картофель фри" }, 
+                            price: "510 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "ba3", 
+                            name: { tr: "Street Dog Bun", en: "Street Dog Bun", ru: "Стрит Дог Бан" }, 
+                            desc: { tr: "Jülyen sosis, Amerikan salatası, ketçap, mayonez, hardal + Patates", en: "Julienne sausages, American salad, ketchup, mayonnaise, mustard + Fries", ru: "Сосиски соломкой, американский салат, кетчуп, майонез, горчица + Картофель фри" }, 
+                            price: "430 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "ba4", 
+                            name: { tr: "Pink Bun", en: "Pink Bun", ru: "Розовый Бан" }, 
+                            desc: { tr: "Çıtır tavuk, lahana salatası, pink mayo, çörek otu + Patates", en: "Crispy chicken, coleslaw, pink mayo, black cumin + Fries", ru: "Хрустящая курица, капустный салат, розовый майонез, черный тмин + Картофель фри" }, 
+                            price: "440 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "ba5", 
+                            name: { tr: "Honey Bun", en: "Honey Bun", ru: "Медовый Бан" }, 
+                            desc: { tr: "Çıtır tavuk, marul, cheddar, ballı hardal sos + Patates", en: "Crispy chicken, lettuce, cheddar, honey mustard sauce + Fries", ru: "Хрустящая курица, салат, чеддер, медово-горчичный соус + Картофель фри" }, 
+                            price: "450 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "ba6", 
+                            name: { tr: "Green Bun", en: "Green Bun", ru: "Зеленый Бан" }, 
+                            desc: { tr: "Falafel topları, avokado sos, cheddar, lahana salatası + Patates", en: "Falafel balls, avocado sauce, cheddar, coleslaw + Fries", ru: "Фалафель, соус авокадо, чеддер, капустный салат + Картофель фри" }, 
+                            price: "440 TL", image: "", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "SICAK SANDVİÇLER",
+                    name: { tr: "SICAK SANDVİÇLER", en: "HOT SANDWICHES", ru: "ГОРЯЧИЕ СЭНДВИЧИ" },
                     products: [
-                        { id: "s1", name: "Sosisli", desc: "Özel soslu sosis, turşu, ketçap, mayonez.", price: "150 TL", image: "images/sosisli.jpg.jpeg", stock: true },
-                        { id: "s2", name: "Goralı", desc: "Özel soslu sosis, turşu, Amerikan Salatası, ketçap, mayonez.", price: "170 TL", image: "images/gorali.jpg.jpeg", stock: true },
-                        { id: "s3", name: "Patso", desc: "Patates kızartması, ketçap, mayonez", price: "220 TL", image: "images/patso.jpg.jpeg", stock: true },
-                        { id: "s4", name: "Cheese Patso", desc: "Patates kızartması, kaşar peyniri, cheddar peyniri, ketçap, mayonez.", price: "250 TL", image: "images/cheesepatso.jpg.jpeg", stock: true },
-                        { id: "s5", name: "Sosisli Patso", desc: "Patates kızartması, jülyen sosis, ketçap, mayonez.", price: "280 TL", image: "images/sosislipatso.jpg.jpeg", stock: true },
-                        { id: "s6", name: "Karışık Patso", desc: "Patates kızartması, jülyen sosis, sucuk, kaşar peyniri, ketçap, mayonez.", price: "320 TL", image: "images/karisikpatso.jpg.jpeg", stock: true },
-                        { id: "s7", name: "Kumru", desc: "Sosis, salam, sucuk, turşu, cheddar peyniri, kaşar peyniri, ketçap, mayonez.", price: "350 TL", image: "images/kumru.jpg.jpeg", stock: true }
+                        { 
+                            id: "s1", 
+                            name: { tr: "Sosisli", en: "Hot Dog", ru: "Хот-дог" }, 
+                            desc: { tr: "Özel soslu sosis, turşu, ketçap, mayonez.", en: "Special sauce sausage, pickles, ketchup, mayonnaise.", ru: "Сосиска в фирменном соусе, соленые огурцы, кетчуп, майонез." }, 
+                            price: "150 TL", image: "images/sosisli.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "s2", 
+                            name: { tr: "Goralı", en: "Gorali Sandwich", ru: "Сэндвич Горалы" }, 
+                            desc: { tr: "Özel soslu sosis, turşu, Amerikan Salatası, ketçap, mayonez.", en: "Special sauce sausage, pickles, American salad, ketchup, mayonnaise.", ru: "Сосиска в фирменном соусе, соленья, американский салат, кетчуп, майонез." }, 
+                            price: "170 TL", image: "images/gorali.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "s3", 
+                            name: { tr: "Patso", en: "Fries Sandwich (Patso)", ru: "Сэндвич с картофелем фри" }, 
+                            desc: { tr: "Patates kızartması, ketçap, mayonez", en: "French fries, ketchup, mayonnaise", ru: "Картофель фри, кетчуп, майонез" }, 
+                            price: "220 TL", image: "images/patso.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "s4", 
+                            name: { tr: "Cheese Patso", en: "Cheese Fries Sandwich", ru: "Сырный Патсо" }, 
+                            desc: { tr: "Patates kızartması, kaşar peyniri, cheddar peyniri, ketçap, mayonez.", en: "French fries, kashar cheese, cheddar cheese, ketchup, mayonnaise.", ru: "Картофель фри, сыр кашар, сыр чеддер, кетчуп, майонез." }, 
+                            price: "250 TL", image: "images/cheesepatso.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "s5", 
+                            name: { tr: "Sosisli Patso", en: "Sausage & Fries Sandwich", ru: "Патсо с сосиской" }, 
+                            desc: { tr: "Patates kızartması, jülyen sosis, ketçap, mayonez.", en: "French fries, julienne sausages, ketchup, mayonnaise.", ru: "Картофель фри, сосиски соломкой, кетчуп, майонез." }, 
+                            price: "280 TL", image: "images/sosislipatso.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "s6", 
+                            name: { tr: "Karışık Patso", en: "Mixed Fries Sandwich", ru: "Микс Патсо" }, 
+                            desc: { tr: "Patates kızartması, jülyen sosis, sucuk, kaşar peyniri, ketçap, mayonez.", en: "French fries, julienne sausages, turkish sucuk, kashar cheese, ketchup, mayonnaise.", ru: "Картофель фри, сосиски, суджук, сыр кашар, кетчуп, майонез." }, 
+                            price: "320 TL", image: "images/karisikpatso.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "s7", 
+                            name: { tr: "Kumru", en: "Kumru Sandwich", ru: "Сэндвич Кумру" }, 
+                            desc: { tr: "Sosis, salam, sucuk, turşu, cheddar peyniri, kaşar peyniri, ketçap, mayonez.", en: "Sausage, salami, turkish sucuk, pickles, cheddar, kashar cheese, ketchup, mayonnaise.", ru: "Сосиска, салями, суджук, соленья, чеддер, сыр кашар, кетчуп, майонез." }, 
+                            price: "350 TL", image: "images/kumru.jpg.jpeg", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "TOSTLAR",
+                    name: { tr: "TOSTLAR", en: "TOASTS", ru: "ТОСТЫ" },
                     products: [
-                        { id: "t1", name: "Kaşarlı Tost", desc: "Kaşar peyniri.", price: "200 TL", image: "images/kasarlitost.jpg.jpeg", stock: true },
-                        { id: "t2", name: "Karışık Tost", desc: "Kaşar peyniri, kasap sucuk.", price: "250 TL", image: "images/karisiktost.jpg.jpeg", stock: true },
-                        { id: "t3", name: "Yengen Tost", desc: "Kaşar peyniri, kasap sucuk, domates, turşu, ketçap, mayonez.", price: "280 TL", image: "images/yengentost.jpg.jpeg", stock: true },
-                        { id: "t4", name: "Süper Ayvalık Tostu", desc: "Kaşar peyniri, kasap sucuk, sosis, Amerikan Salatası, turşu, ketçap, mayonez.", price: "320 TL", image: "images/ayvaliktost.jpg.jpeg", stock: true },
-                        { id: "t5", name: "Cheddar Bomb Tost", desc: "Cheddar peyniri, kasap sucuk, sosis, turşu.", price: "320 TL", image: "images/cheddarbombtost.jpg.jpeg", stock: true }
+                        { 
+                            id: "t1", 
+                            name: { tr: "Kaşarlı Tost", en: "Kashar Cheese Toast", ru: "Тост с сыром кашар" }, 
+                            desc: { tr: "Kaşar peyniri.", en: "Kashar cheese.", ru: "Сыр кашар." }, 
+                            price: "200 TL", image: "images/kasarlitost.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "t2", 
+                            name: { tr: "Karışık Tost", en: "Mixed Toast", ru: "Микс тост" }, 
+                            desc: { tr: "Kaşar peyniri, kasap sucuk.", en: "Kashar cheese, turkish sucuk.", ru: "Сыр кашар, суджук." }, 
+                            price: "250 TL", image: "images/karisiktost.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "t3", 
+                            name: { tr: "Yengen Tost", en: "Yengen Toast", ru: "Тост Енген" }, 
+                            desc: { tr: "Kaşar peyniri, kasap sucuk, domates, turşu, ketçap, mayonez.", en: "Kashar cheese, sucuk, tomatoes, pickles, ketchup, mayonnaise.", ru: "Сыр кашар, суджук, помидоры, соленья, кетчуп, майонез." }, 
+                            price: "280 TL", image: "images/yengentost.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "t4", 
+                            name: { tr: "Süper Ayvalık Tostu", en: "Super Ayvalik Toast", ru: "Супер тост Айвалык" }, 
+                            desc: { tr: "Kaşar peyniri, kasap sucuk, sosis, Amerikan Salatası, turşu, ketçap, mayonez.", en: "Kashar cheese, sucuk, sausage, American salad, pickles, ketchup, mayonnaise.", ru: "Сыр кашар, суджук, сосиска, американский салат, соленья, кетчуп, майонез." }, 
+                            price: "320 TL", image: "images/ayvaliktost.jpg.jpeg", stock: true 
+                        },
+                        { 
+                            id: "t5", 
+                            name: { tr: "Cheddar Bomb Tost", en: "Cheddar Bomb Toast", ru: "Чеддер Бомб Тост" }, 
+                            desc: { tr: "Cheddar peyniri, kasap sucuk, sosis, turşu.", en: "Cheddar cheese, sucuk, sausage, pickles.", ru: "Сыр чеддер, суджук, сосиска, соленья." }, 
+                            price: "320 TL", image: "images/cheddarbombtost.jpg.jpeg", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "FUN BOWLLAR",
+                    name: { tr: "FUN BOWLLAR", en: "FUN BOWLS", ru: "ФАН БОУЛЫ" },
                     products: [
-                        { id: "f1", name: "Pink Fun Bowl", desc: "Patates üzerine: mini hamburger şişleri, özel B&F pink fun sos.", price: "490 TL", image: "", stock: true },
-                        { id: "f2", name: "Green Mozz Fun Bowl", desc: "Patates üzerine: mozzarella şişleri, avokado mayo sos.", price: "410 TL", image: "", stock: true },
-                        { id: "f3", name: "Twister Fun Bowl", desc: "Patates üzerine: spiral kesim kızarmış sosis şişleri, cheddar sos.", price: "390 TL", image: "", stock: true },
-                        { id: "f4", name: "Fried Chicken Fun Bowl", desc: "Patates üzerine: çıtır tavuk şişleri, ranch sos, ballı hardal sos.", price: "470 TL", image: "", stock: true },
-                        { id: "f5", name: "Fun Smash Bowl", desc: "Patates üzerine: 120 gr. ızgarada parçalanmış smash köfte, cheddar, çıtır soğan, özel burger sos.", price: "540 TL", image: "", stock: true }
+                        { 
+                            id: "f1", 
+                            name: { tr: "Pink Fun Bowl", en: "Pink Fun Bowl", ru: "Розовый Фан Боул" }, 
+                            desc: { tr: "Patates üzerine: mini hamburger şişleri, özel B&F pink fun sos.", en: "On fries: mini burger skewers, special B&F pink fun sauce.", ru: "На картофеле фри: мини-бургеры на шпажках, фирменный розовый соус." }, 
+                            price: "490 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "f2", 
+                            name: { tr: "Green Mozz Fun Bowl", en: "Green Mozz Fun Bowl", ru: "Зеленый Моцц Фан Боул" }, 
+                            desc: { tr: "Patates üzerine: mozzarella şişleri, avokado mayo sos.", en: "On fries: mozzarella skewers, avocado mayo sauce.", ru: "На картофеле фри: моцарелла на шпажках, соус авокадо-майо." }, 
+                            price: "410 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "f3", 
+                            name: { tr: "Twister Fun Bowl", en: "Twister Fun Bowl", ru: "Твистер Фан Боул" }, 
+                            desc: { tr: "Patates üzerine: spiral kesim kızarmış sosis şişleri, cheddar sos.", en: "On fries: spiral-cut fried sausage skewers, cheddar sauce.", ru: "На картофеле фри: спиральные сосиски на шпажках, соус чеддер." }, 
+                            price: "390 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "f4", 
+                            name: { tr: "Fried Chicken Fun Bowl", en: "Fried Chicken Fun Bowl", ru: "Фри Чикен Фан Боул" }, 
+                            desc: { tr: "Patates üzerine: çıtır tavuk şişleri, ranch sos, ballı hardal sos.", en: "On fries: crispy chicken skewers, ranch sauce, honey mustard sauce.", ru: "На картофеле фри: куриные шашлычки в хрустящей корочке, соус ранч, медовая горчица." }, 
+                            price: "470 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "f5", 
+                            name: { tr: "Fun Smash Bowl", en: "Fun Smash Bowl", ru: "Фан Смеш Боул" }, 
+                            desc: { tr: "Patates üzerine: 120 gr. ızgarada parçalanmış smash köfte, cheddar, çıtır soğan, özel burger sos.", en: "On fries: 120g smashed beef patty, cheddar, crispy onions, special burger sauce.", ru: "На картофеле фри: 120г котлета смеш на гриле, чеддер, хрустящий лук, фирменный соус." }, 
+                            price: "540 TL", image: "", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "FUN MENÜLER",
+                    name: { tr: "FUN MENÜLER", en: "FUN MENUS", ru: "ФАН МЕНЮ" },
                     products: [
-                        { id: "m1", name: "2'li Islak Hamburger Menü", desc: "2 Islak Hamburger + Patates + İçecek", price: "510 TL", image: "", stock: true },
-                        { id: "m2", name: "2'li Sosisli Menü", desc: "2 Sosisli + Patates + İçecek", price: "510 TL", image: "", stock: true },
-                        { id: "m3", name: "Süper Ayvalık Tostu Menü", desc: "Ayvalık Tostu + Patates + İçecek", price: "570 TL", image: "", stock: true },
-                        { id: "m4", name: "Kumru Menü", desc: "Kumru + Patates + İçecek", price: "590 TL", image: "", stock: true }
+                        { 
+                            id: "m1", 
+                            name: { tr: "2'li Islak Hamburger Menü", en: "Double Wet Burger Menu", ru: "Меню из 2 влажных бургеров" }, 
+                            desc: { tr: "2 Islak Hamburger + Patates + İçecek", en: "2 Wet Burgers + Fries + Beverage", ru: "2 Влажных бургера + Картофель фри + Напиток" }, 
+                            price: "510 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "m2", 
+                            name: { tr: "2'li Sosisli Menü", en: "Double Hot Dog Menu", ru: "Меню из 2 хот-догов" }, 
+                            desc: { tr: "2 Sosisli + Patates + İçecek", en: "2 Hot Dogs + Fries + Beverage", ru: "2 Хот-дога + Картофель фри + Напиток" }, 
+                            price: "510 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "m3", 
+                            name: { tr: "Süper Ayvalık Tostu Menü", en: "Super Ayvalik Toast Menu", ru: "Меню Супер тост Айвалык" }, 
+                            desc: { tr: "Ayvalık Tostu + Patates + İçecek", en: "Ayvalik Toast + Fries + Beverage", ru: "Тост Айвалык + Картофель фри + Напиток" }, 
+                            price: "570 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "m4", 
+                            name: { tr: "Kumru Menü", en: "Kumru Menu", ru: "Меню Кумру" }, 
+                            desc: { tr: "Kumru + Patates + İçecek", en: "Kumru Sandwich + Fries + Beverage", ru: "Сэндвич Кумру + Картофель фри + Напиток" }, 
+                            price: "590 TL", image: "", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "ATIŞTIRMALIKLAR",
+                    name: { tr: "ATIŞTIRMALIKLAR", en: "SNACKS", ru: "ЗАКУСКИ" },
                     products: [
-                        { id: "a1", name: "Patates Kızartması", desc: "Porsiyon patates kızartması", price: "200 TL", image: "", stock: true },
-                        { id: "a2", name: "Soğan Halkası 6'lı", desc: "6 adet soğan halkası", price: "160 TL", image: "", stock: true },
-                        { id: "a3", name: "Mozzarella Stick 4'lü", desc: "4 adet mozzarella çubuğu", price: "180 TL", image: "", stock: true },
-                        { id: "a4", name: "Nugget 6'lı", desc: "6 adet nugget", price: "150 TL", image: "", stock: true },
-                        { id: "a5", name: "Chicken Tenders 4'lü", desc: "4 adet tavuk tender", price: "180 TL", image: "", stock: true },
-                        { id: "a6", name: "Mega Fun Kova", desc: "Patates, 3 adet Soğan Halkası, 3 adet Sosis, 3 adet Nugget, 3 adet Chicken Tenders.", price: "450 TL", image: "", stock: true }
+                        { 
+                            id: "a1", 
+                            name: { tr: "Patates Kızartması", en: "French Fries", ru: "Картофель фри" }, 
+                            desc: { tr: "Porsiyon patates kızartması", en: "Portion of french fries", ru: "Порция картофеля фри" }, 
+                            price: "200 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "a2", 
+                            name: { tr: "Soğan Halkası 6'lı", en: "Onion Rings (6 pcs)", ru: "Луковые кольца (6 шт)" }, 
+                            desc: { tr: "6 adet soğan halkası", en: "6 onion rings", ru: "6 луковых колец" }, 
+                            price: "160 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "a3", 
+                            name: { tr: "Mozzarella Stick 4'lü", en: "Mozzarella Sticks (4 pcs)", ru: "Моцарелла палочки (4 шт)" }, 
+                            desc: { tr: "4 adet mozzarella çubuğu", en: "4 mozzarella sticks", ru: "4 палочки моцареллы" }, 
+                            price: "180 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "a4", 
+                            name: { tr: "Nugget 6'lı", en: "Chicken Nuggets (6 pcs)", ru: "Куриные наггетсы (6 шт)" }, 
+                            desc: { tr: "6 adet nugget", en: "6 chicken nuggets", ru: "6 наггетсов" }, 
+                            price: "150 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "a5", 
+                            name: { tr: "Chicken Tenders 4'lü", en: "Chicken Tenders (4 pcs)", ru: "Куриные тендеры (4 шт)" }, 
+                            desc: { tr: "4 adet tavuk tender", en: "4 chicken tenders", ru: "4 куриных тендера" }, 
+                            price: "180 TL", image: "", stock: true 
+                        },
+                        { 
+                            id: "a6", 
+                            name: { tr: "Mega Fun Kova", en: "Mega Fun Bucket", ru: "Мега Фан Ведро" }, 
+                            desc: { tr: "Patates, 3 adet Soğan Halkası, 3 adet Sosis, 3 adet Nugget, 3 adet Chicken Tenders.", en: "Fries, 3 onion rings, 3 sausages, 3 nuggets, 3 chicken tenders.", ru: "Картофель фри, 3 луковых кольца, 3 сосиски, 3 наггетса, 3 куриных тендера." }, 
+                            price: "450 TL", image: "", stock: true 
+                        }
                     ]
                 },
                 {
                     key: "İÇECEKLER",
+                    name: { tr: "İÇECEKLER", en: "BEVERAGES", ru: "НАПИТКИ" },
                     products: [
-                        { id: "i1", name: "Su", desc: "330 ml", price: "40 TL", image: "", stock: true },
-                        { id: "i2", name: "Ayran", desc: "200 ml", price: "70 TL", image: "", stock: true },
-                        { id: "i3", name: "Soda", desc: "Kutu soda", price: "60 TL", image: "", stock: true },
-                        { id: "i4", name: "Meyveli Soda", desc: "Şeftali / Limon / Mango", price: "70 TL", image: "", stock: true },
-                        { id: "i5", name: "Limonata", desc: "Ev yapımı limonata", price: "160 TL", image: "", stock: true },
-                        { id: "i6", name: "Cappy Meyve", desc: "Kutu meyve suyu", price: "90 TL", image: "", stock: true },
-                        { id: "i7", name: "Coca Cola", desc: "330 ml kutu", price: "90 TL", image: "", stock: true },
-                        { id: "i8", name: "Coca Cola Zero", desc: "330 ml kutu", price: "90 TL", image: "", stock: true },
-                        { id: "i9", name: "Fuse Tea", desc: "Kutu soğuk çay", price: "90 TL", image: "", stock: true },
-                        { id: "i10", name: "Fanta", desc: "330 ml kutu", price: "90 TL", image: "", stock: true },
-                        { id: "i11", name: "Sprite", desc: "330 ml kutu", price: "90 TL", image: "", stock: true }
+                        { id: "i1", name: { tr: "Su", en: "Water", ru: "Вода" }, desc: { tr: "330 ml", en: "330 ml", ru: "330 мл" }, price: "40 TL", image: "", stock: true },
+                        { id: "i2", name: { tr: "Ayran", en: "Ayran", ru: "Айран" }, desc: { tr: "200 ml", en: "200 ml", ru: "200 мл" }, price: "70 TL", image: "", stock: true },
+                        { id: "i3", name: { tr: "Soda", en: "Sparkling Water", ru: "Газированная вода" }, desc: { tr: "Kutu soda", en: "Can sparkling water", ru: "Минеральная вода" }, price: "60 TL", image: "", stock: true },
+                        { id: "i4", name: { tr: "Meyveli Soda", en: "Fruit Flavored Soda", ru: "Фруктовая газировка" }, desc: { tr: "Şeftali / Limon / Mango", en: "Peach / Lemon / Mango", ru: "Персик / Лимон / Манго" }, price: "70 TL", image: "", stock: true },
+                        { id: "i5", name: { tr: "Limonata", en: "Lemonade", ru: "Лимонад" }, desc: { tr: "Ev yapımı limonata", en: "Homemade lemonade", ru: "Домашний лимонад" }, price: "160 TL", image: "", stock: true },
+                        { id: "i6", name: { tr: "Cappy Meyve", en: "Cappy Juice", ru: "Сок Cappy" }, desc: { tr: "Kutu meyve suyu", en: "Box fruit juice", ru: "Пакетированный сок" }, price: "90 TL", image: "", stock: true },
+                        { id: "i7", name: { tr: "Coca Cola", en: "Coca Cola", ru: "Кока-Кола" }, desc: { tr: "330 ml kutu", en: "330 ml can", ru: "330 мл ж/б" }, price: "90 TL", image: "", stock: true },
+                        { id: "i8", name: { tr: "Coca Cola Zero", en: "Coca Cola Zero", ru: "Кока-Кола Зеро" }, desc: { tr: "330 ml kutu", en: "330 ml can", ru: "330 мл ж/б" }, price: "90 TL", image: "", stock: true },
+                        { id: "i9", name: { tr: "Fuse Tea", en: "Fuse Tea", ru: "Фьюз Чай" }, desc: { tr: "Kutu soğuk çay", en: "Can iced tea", ru: "Холодный чай" }, price: "90 TL", image: "", stock: true },
+                        { id: "i10", name: { tr: "Fanta", en: "Fanta", ru: "Фанта" }, desc: { tr: "330 ml kutu", en: "330 ml can", ru: "330 мл ж/б" }, price: "90 TL", image: "", stock: true },
+                        { id: "i11", name: { tr: "Sprite", en: "Sprite", ru: "Спрайт" }, desc: { tr: "330 ml kutu", en: "330 ml can", ru: "330 мл ж/б" }, price: "90 TL", image: "", stock: true }
                     ]
                 }
             ]
         };
 
-        // Versiyon kontrolü ile önbelleği otomatik güncelle
+        // Otomatik Güncelleme Mekanizması
         let menuData;
         const localData = localStorage.getItem('bunfun_menu_data');
         if (localData) {
@@ -571,51 +779,6 @@
                 renderCategories();
             }
         });
-
-        function getProductName(name, lang) {
-            const t = uiTexts[lang];
-            if (t.productNames && t.productNames[name]) {
-                return t.productNames[name];
-            }
-            return name;
-        }
-
-        function translateDesc(desc, lang) {
-            if (lang === 'tr') return desc;
-            let translated = desc;
-            if (lang === 'en') {
-                translated = translated
-                    .replace(/Patates/g, "Fries")
-                    .replace(/patates/g, "fries")
-                    .replace(/Dana burger köftesi/g, "Beef burger patty")
-                    .replace(/dana köfte/g, "beef patty")
-                    .replace(/Çıtır tavuk/g, "Crispy chicken")
-                    .replace(/çıtır tavuk/g, "crispy chicken")
-                    .replace(/çıtır soğan/g, "crispy onions")
-                    .replace(/Çıtır soğan/g, "Crispy onions")
-                    .replace(/özel sos/g, "special sauce")
-                    .replace(/turşu/g, "pickles")
-                    .replace(/marul/g, "lettuce")
-                    .replace(/İçecek/g, "Beverage")
-                    .replace(/Ev yapımı limonata/g, "Homemade lemonade");
-            } else if (lang === 'ru') {
-                translated = translated
-                    .replace(/Patates/g, "Картофель фри")
-                    .replace(/patates/g, "картофель фри")
-                    .replace(/Dana burger köftesi/g, "Говяжья котлета для бургера")
-                    .replace(/dana köfte/g, "говяжья котлета")
-                    .replace(/Çıtır tavuk/g, "Хрустящая курица")
-                    .replace(/çıtır tavuk/g, "хрустящая курица")
-                    .replace(/çıtır soğan/g, "хрустящий лук")
-                    .replace(/Çıtır soğan/g, "Хрустящий лук")
-                    .replace(/özel sos/g, "специальный соус")
-                    .replace(/turşu/g, "соленые огурцы")
-                    .replace(/marul/g, "салат айсберг")
-                    .replace(/İçecek/g, "Напиток")
-                    .replace(/Ev yapımı limonata/g, "Домашний лимонад");
-            }
-            return translated;
-        }
 
         let currentLang = 'tr';
         let currentCatIndex = 0;
@@ -648,12 +811,12 @@
         function renderCategories() {
             const container = document.getElementById('category-container');
             container.innerHTML = '';
-            const t = uiTexts[currentLang];
 
             menuData.categories.forEach((cat, index) => {
                 const card = document.createElement('div');
                 card.className = 'category-card';
-                const displayName = t.catNames[cat.key] || cat.key;
+                // Tablodan/veriden seçilen dile ait kategori adını alıyoruz
+                const displayName = (cat.name && cat.name[currentLang]) ? cat.name[currentLang] : cat.key;
                 card.innerHTML = `<span>${displayName}</span> <span>→</span>`;
                 card.onclick = () => openCategory(index);
                 container.appendChild(card);
@@ -664,7 +827,7 @@
             currentCatIndex = catIndex;
             const cat = menuData.categories[catIndex];
             const t = uiTexts[currentLang];
-            document.getElementById('product-section-title').innerText = t.catNames[cat.key] || cat.key;
+            document.getElementById('product-section-title').innerText = (cat.name && cat.name[currentLang]) ? cat.name[currentLang] : cat.key;
 
             const container = document.getElementById('product-container');
             container.innerHTML = '';
@@ -675,7 +838,7 @@
 
                 let thumbHtml = '';
                 if (prod.image && prod.image.trim() !== "") {
-                    thumbHtml = `<img class="product-thumb" src="${prod.image}" alt="${prod.name}">`;
+                    thumbHtml = `<img class="product-thumb" src="${prod.image}" alt="">`;
                 } else {
                     thumbHtml = `<div class="product-thumb-placeholder">${t.soonText}</div>`;
                 }
@@ -686,8 +849,9 @@
                     pCard.style.opacity = '0.6';
                 }
 
-                const displayName = getProductName(prod.name, currentLang);
-                const displayDesc = translateDesc(prod.desc, currentLang);
+                // Doğrudan seçilen dildeki veriyi tablo yapısından çekiyoruz
+                const displayName = (typeof prod.name === 'object') ? (prod.name[currentLang] || prod.name['tr']) : prod.name;
+                const displayDesc = (typeof prod.desc === 'object') ? (prod.desc[currentLang] || prod.desc['tr']) : prod.desc;
 
                 pCard.innerHTML = `
                     ${thumbHtml}
@@ -718,7 +882,6 @@
                 const imgEl = document.createElement('img');
                 imgEl.className = 'detail-img';
                 imgEl.src = prod.image;
-                imgEl.alt = prod.name;
                 containerEl.appendChild(imgEl);
             } else {
                 const placeholderEl = document.createElement('div');
@@ -727,8 +890,11 @@
                 containerEl.appendChild(placeholderEl);
             }
 
-            document.getElementById('detail-title').innerText = getProductName(prod.name, currentLang);
-            document.getElementById('detail-desc').innerText = translateDesc(prod.desc, currentLang);
+            const displayName = (typeof prod.name === 'object') ? (prod.name[currentLang] || prod.name['tr']) : prod.name;
+            const displayDesc = (typeof prod.desc === 'object') ? (prod.desc[currentLang] || prod.desc['tr']) : prod.desc;
+
+            document.getElementById('detail-title').innerText = displayName;
+            document.getElementById('detail-desc').innerText = displayDesc;
             document.getElementById('detail-price').innerText = prod.price;
 
             goToPage('page-detail');
@@ -761,7 +927,7 @@
             menuData.categories.forEach((cat, cIdx) => {
                 const catHeader = document.createElement('h3');
                 catHeader.style.cssText = "font-size: 16px; color: #c73729; margin: 15px 0 8px 0; border-bottom: 2px solid #c73729; padding-bottom: 4px;";
-                catHeader.innerText = cat.key;
+                catHeader.innerText = cat.name.tr;
                 container.appendChild(catHeader);
 
                 cat.products.forEach((prod, pIdx) => {
@@ -769,17 +935,20 @@
                     row.className = 'admin-product-row';
                     
                     const isChecked = prod.stock !== false ? 'checked' : '';
+                    const prodNameTr = (typeof prod.name === 'object') ? prod.name.tr : prod.name;
+                    const prodDescTr = (typeof prod.desc === 'object') ? prod.desc.tr : prod.desc;
 
                     row.innerHTML = `
-                        <h4>${prod.name}</h4>
+                        <h4>${prodNameTr}</h4>
                         <div class="admin-row-inputs">
-                            <input type="text" id="desc_${cIdx}_${pIdx}" value="${prod.desc}" placeholder="Açıklama">
+                            <input type="text" id="desc_${cIdx}_${pIdx}" value="${prodDescTr}" placeholder="Açıklama">
                             <input type="text" id="price_${cIdx}_${pIdx}" class="price-input" value="${prod.price}" placeholder="Fiyat">
                         </div>
                         <label class="admin-checkbox-label">
-                            <input type="checkbox" id="stock_${cIdx}_${pIdx}" ${isChecked}> Stokta Var (Kaldırılırsa tüktendi yazar)
+                            <input type="checkbox" id="stock_${cIdx}_${pIdx}" ${isChecked}> Stokta Var (Kaldırılırsa tükendi yazar)
                         </label>
                     `;
+                    container.rowsData = prod; 
                     container.appendChild(row);
                 });
             });
@@ -793,7 +962,12 @@
                     const stockInput = document.getElementById(`stock_${cIdx}_${pIdx}`);
 
                     if (descInput && priceInput && stockInput) {
-                        prod.desc = descInput.value;
+                        // Açıklamanın Türkçe versiyonunu güncelliyoruz
+                        if (typeof prod.desc === 'object') {
+                            prod.desc.tr = descInput.value;
+                        } else {
+                            prod.desc = descInput.value;
+                        }
                         prod.price = priceInput.value;
                         prod.stock = stockInput.checked;
                     }
